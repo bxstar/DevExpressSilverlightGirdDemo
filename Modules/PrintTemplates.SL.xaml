@@ -1,0 +1,67 @@
+<dxdemo:PrintViewGridDemoModule x:Class="GridDemo.PrintTemplates" mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:global="clr-namespace:System.Globalization;assembly=mscorlib" xmlns:dxdemo="clr-namespace:GridDemo" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxgt="clr-namespace:DevExpress.Xpf.Grid.Themes;assembly=DevExpress.Xpf.Grid.v14.1" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:dxp="http://schemas.devexpress.com/winfx/2008/xaml/printing" xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+    <dxdemo:PrintViewGridDemoModule.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="/DevExpress.Xpf.Grid.v14.1;component/Themes/Generic/PrintingTemplates.SL.xaml" />
+
+                <ResourceDictionary Source="/GridDemo;component/ModuleResources/PrintTemplatesResources.SL.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <dxdb:NWindDataLoader x:Key="NWindDataLoader" />
+        </ResourceDictionary>
+    </dxdemo:PrintViewGridDemoModule.Resources>
+    <dxdb:DemoModuleControl>
+        <dxdb:DemoModuleControl.OptionsContent>
+            <StackPanel Orientation="Vertical">
+                <dx:GroupFrame Header="Templates" Margin="0,0,0,12" VerticalAlignment="Top">
+                    <dxe:ListBoxEdit Background="{x:Null}" ShowBorder="False" x:Name="templateNamesListBox" EditValueChanged="templateNamesListBox_SelectionChanged">
+                        <dxe:ListBoxEdit.StyleSettings>
+                            <dxe:RadioListBoxEditStyleSettings />
+                        </dxe:ListBoxEdit.StyleSettings>
+                        <dxe:ListBoxEdit.Items>
+                            <sys:String>Detail</sys:String>
+                            <sys:String>Mail Merge</sys:String>
+                            <sys:String>Default</sys:String>
+                        </dxe:ListBoxEdit.Items>
+                    </dxe:ListBoxEdit>
+                </dx:GroupFrame>
+                <Button Name="newTabButton" Click="newTabButton_Click" Margin="0,0,0,12">
+                    Preview in New Tab
+                </Button>
+
+            </StackPanel>
+        </dxdb:DemoModuleControl.OptionsContent>
+        <dx:DXTabControl Name="tabControl" Margin="-1,2,-1,-1" Padding="1" TabHidden="tabControl_TabHidden">
+            <dx:DXTabItem Padding="12,4,12,4">
+                <dx:DXTabItem.Header>
+                    <TextBlock FontWeight="Bold">Grid Control</TextBlock>
+                </dx:DXTabItem.Header>
+                <dxg:GridControl Name="grid" Grid.Column="0" ItemsSource="{Binding Path=EmployeesNew, Source={StaticResource NWindDataLoader}}">
+                    <dxg:GridControl.Columns>
+                        <dxg:GridColumn FieldName="FirstName" MinWidth="50" />
+                        <dxg:GridColumn FieldName="LastName" MinWidth="50" />
+                        <dxg:GridColumn FieldName="BirthDate" MinWidth="50">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:DateEditSettings DisplayFormat="d" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                        <dxg:GridColumn FieldName="Title" MinWidth="50" Header="Position" />
+                        <dxg:GridColumn FieldName="FullName" Visible="False" ShowInColumnChooser="False" UnboundType="String" UnboundExpression="[FirstName] + ' ' + [LastName]" />
+                        <dxg:GridColumn FieldName="Photo" MinWidth="60" PrintCellStyle="{StaticResource photoColumnStyle}">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:PopupImageEditSettings ShowMenu="False" ShowLoadDialogOnClickMode="Never" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                    </dxg:GridControl.Columns>
+                    <dxg:GridControl.View>
+                        <dxg:TableView Name="view" ShowGroupedColumns="True" AutoWidth="True" AllowGrouping="False">
+                            <dxg:TableView.PrintHeaderTemplate>
+                                <DataTemplate />
+                            </dxg:TableView.PrintHeaderTemplate>
+                        </dxg:TableView>
+                    </dxg:GridControl.View>
+                </dxg:GridControl>
+            </dx:DXTabItem>
+        </dx:DXTabControl>
+    </dxdb:DemoModuleControl>
+</dxdemo:PrintViewGridDemoModule>

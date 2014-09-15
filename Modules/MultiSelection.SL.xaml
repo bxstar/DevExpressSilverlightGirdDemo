@@ -1,0 +1,55 @@
+<local:GridDemoModule x:Class="GridDemo.MultiSelection" mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" UseGridControlWrapperAsDataContext="True" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+ <local:GridDemoModule.Resources>
+  <ResourceDictionary>
+   <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="/GridDemo;component/Themes/generic.SL.xaml" />
+                <ResourceDictionary Source="/GridDemo;component/ModuleResources/MultiSelectionTemplates.SL.xaml" />
+   </ResourceDictionary.MergedDictionaries>
+            <dxdb:NWindDataLoader x:Key="NWindDataLoader" />
+
+        </ResourceDictionary>
+ </local:GridDemoModule.Resources>
+ <dxdb:DemoModuleControl SupressGroupFramePaddingInOptions="False">
+        <dxdb:DemoModuleControl.OptionsContent>
+            <StackPanel>
+                <dxe:CheckEdit x:Name="enableMultiSelectCheckEdit" Content="Enable Multi-Selection" IsChecked="True" Checked="EnableMultiSelectCheckEditChecked" Unchecked="EnableMultiSelectCheckEditUnchecked" />
+
+                <local:MultiSelectionOptionsControl x:Name="ProductsMultiSelectionOptionsControl" Margin="0,12,0,0" Header="Product" ComboBoxItemsSource="{Binding Path=Products, Source={StaticResource NWindDataLoader}}" ComboBoxDisplayMember="ProductName" ComboBoxValueMember="ProductID" />
+                <local:MultiSelectionOptionsControl x:Name="PriceMultiSelectionOptionsControl" Margin="0,12,0,0" Header="Price Range" />
+                <dx:GroupFrame Header="Selected Records" Margin="0,12,0,0">
+                    <dxe:ListBoxEdit x:Name="SelectionRowsListBox" Height="240" Background="{x:Null}" Width="200" ItemsSource="{Binding Path=GridControl.SelectedItems}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ItemTemplate="{StaticResource selectedRowItemTemplate}" />
+       </dx:GroupFrame>
+            </StackPanel>
+     </dxdb:DemoModuleControl.OptionsContent>
+        <dxg:GridControl x:Name="grid" ItemsSource="{Binding Path=InvoicesNew, Source={StaticResource NWindDataLoader}}" CustomSummary="grid_CustomSummary" SelectionMode="Row" SelectionChanged="gridView_SelectionChanged" CurrentItemChanged="grid_CurrentItemChanged">
+            <dxg:GridControl.Columns>
+       <dxg:GridColumn x:Name="colID" FieldName="OrderID" MinWidth="60" Width="60" AllowResizing="False" FixedWidth="true" Header="ID" />
+                <dxg:GridColumn x:Name="colProduct" FieldName="ProductID" Header="Product" MinWidth="200" Width="200">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:ComboBoxEditSettings AutoComplete="True" ImmediatePopup="True" ValueMember="ProductID" DisplayMember="ProductName" ItemsSource="{Binding Path=Products, Source={StaticResource NWindDataLoader}}" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn x:Name="colUnitPrice" FieldName="UnitPrice" MinWidth="50" Width="50">
+        <dxg:GridColumn.EditSettings>
+         <dxe:SpinEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="c" MaskCulture="en-US" />
+        </dxg:GridColumn.EditSettings>
+       </dxg:GridColumn>
+       <dxg:GridColumn x:Name="colQuantity" FieldName="Quantity" MinWidth="50" Width="50" />
+       <dxg:GridColumn x:Name="colTotal" FieldName="Total" MinWidth="110" Width="110" UnboundType="Decimal" ReadOnly="True" UnboundExpression="[UnitPrice] * [Quantity]">
+        <dxg:GridColumn.EditSettings>
+         <dxe:TextEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="c" MaskCulture="en-US" />
+        </dxg:GridColumn.EditSettings>
+       </dxg:GridColumn>
+      </dxg:GridControl.Columns>
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="defaultView" ShowTotalSummary="True" IsTotalSummaryMenuEnabled="False" ShowGroupedColumns="True" NavigationStyle="Cell" AutoWidth="True" />
+            </dxg:GridControl.View>
+            <dxg:GridControl.TotalSummary>
+       <dxg:GridSummaryItem FieldName="Total" SummaryType="Custom" ShowInColumn="Total" DisplayFormat="Grand Total=${0:N}" />
+      </dxg:GridControl.TotalSummary>
+      <dxg:GridControl.GroupSummary>
+       <dxg:GridSummaryItem FieldName="Total" SummaryType="Custom" DisplayFormat="Grand Total=${0:N}" />
+      </dxg:GridControl.GroupSummary>
+        </dxg:GridControl>
+    </dxdb:DemoModuleControl>
+</local:GridDemoModule>

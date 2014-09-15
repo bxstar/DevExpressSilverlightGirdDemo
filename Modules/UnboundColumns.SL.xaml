@@ -1,0 +1,72 @@
+<local:GridDemoModule x:Class="GridDemo.UnboundColumns" mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+    <local:GridDemoModule.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GridDemo;component/ModuleResources/UnboundColumnsTemplates.SL.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <dxdb:NWindDataLoader x:Key="NWindDataLoader" />
+        </ResourceDictionary>
+    </local:GridDemoModule.Resources>
+    <dxdb:DemoModuleControl>
+        <dxdb:DemoModuleControl.OptionsContent>
+            <StackPanel MinWidth="160">
+                <dx:GroupFrame Header="Column:">
+                    <dxe:ListBoxEdit Background="{x:Null}" ShowBorder="False" Name="columnsList" SelectedIndex="0">
+                        <dxe:ListBoxEdit.StyleSettings>
+                            <dxe:RadioListBoxEditStyleSettings />
+                        </dxe:ListBoxEdit.StyleSettings>
+                        <dxe:ListBoxEdit.Items>
+                            <dxe:ListBoxEditItem Tag="DiscountAmount">Discount Amount</dxe:ListBoxEditItem>
+                            <dxe:ListBoxEditItem Tag="Total">Total</dxe:ListBoxEditItem>
+                            <dxe:ListBoxEditItem Tag="TotalScale">Total Scale</dxe:ListBoxEditItem>
+                        </dxe:ListBoxEdit.Items>
+                    </dxe:ListBoxEdit>
+                </dx:GroupFrame>
+                <Button Margin="0,12,0,0" Name="showExpressionEditorButton" Click="showExpressionEditorButton_Click">Show Expression Editor</Button>
+            </StackPanel>
+        </dxdb:DemoModuleControl.OptionsContent>
+        <dxg:GridControl Name="grid" Grid.Column="0" ItemsSource="{Binding Path=InvoicesNew, Source={StaticResource NWindDataLoader}}">
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn x:Name="colOrderID" FieldName="OrderID" Width="80" FixedWidth="True" GroupIndex="0" />
+                <dxg:GridColumn x:Name="colProduct" FieldName="ProductID" MinWidth="200" Width="200">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:ComboBoxEditSettings AutoComplete="True" ImmediatePopup="True" ValueMember="ProductID" DisplayMember="ProductName" ItemsSource="{Binding Path=Products, Source={StaticResource NWindDataLoader}}" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn x:Name="colUnitPrice" FieldName="UnitPrice" MinWidth="30">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="c" MaskCulture="en-US" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn x:Name="colDiscount" FieldName="Discount" MinWidth="30">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="p0" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn x:Name="colQuantity" FieldName="Quantity" MinWidth="30" />
+                <dxg:GridColumn x:Name="colDiscountAmount" FieldName="DiscountAmount" UnboundType="Decimal" UnboundExpression="Round([UnitPrice] * [Quantity] - [Total])" MinWidth="100" AllowEditing="False" AllowUnboundExpressionEditor="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="$0.00" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn x:Name="colTotal" FieldName="Total" UnboundType="Decimal" UnboundExpression="([UnitPrice] * [Quantity]) * (1 - [Discount])" CellTemplateSelector="{StaticResource totalCellTemplateSelector}" MinWidth="100" AllowEditing="False" AllowUnboundExpressionEditor="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="$0.00" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn x:Name="colTotalScale" FieldName="TotalScale" Visible="False" ShowInColumnChooser="False" UnboundType="Decimal" UnboundExpression="Iif([Total] &lt; 1000, 0.4, Min((0.5 + ([Total] - 1000) / 1000), 1.2))" AllowUnboundExpressionEditor="True" />
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.GroupSummary>
+                <dxg:GridSummaryItem FieldName="ProductID" SummaryType="Count" />
+                <dxg:GridSummaryItem FieldName="Total" SummaryType="Sum" />
+            </dxg:GridControl.GroupSummary>
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem SummaryType="Count" Alignment="Right" />
+                <dxg:GridSummaryItem FieldName="Total" SummaryType="Sum" Alignment="Left" />
+            </dxg:GridControl.TotalSummary>
+            <dxg:GridControl.View>
+                <dxg:TableView AutoWidth="True" ShowFixedTotalSummary="True" />
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </dxdb:DemoModuleControl>
+</local:GridDemoModule>

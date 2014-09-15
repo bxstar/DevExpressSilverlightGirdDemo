@@ -1,0 +1,119 @@
+<local:GridDemoModule x:Class="GridDemo.VerticalScrollingOptions" mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:dxdbd="clr-namespace:DevExpress.Xpf.DemoBase.DataClasses;assembly=DevExpress.Xpf.DemoBase.v14.1" xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm">
+
+    <local:GridDemoModule.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GridDemo;component/ModuleResources/VerticalScrollingOptionsTemplates.SL.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <dxdb:NWindDataLoader x:Key="NWindDataLoader" />
+            <dxdbd:CarsData x:Key="CarsData" />
+
+            <local:VerticalScrollingOptionsViewModel x:Key="ViewModel">
+                <local:VerticalScrollingOptionsViewModel.ControlDefinitions>
+                    <local:GridControlDefinitionCollection>
+                        <local:GridControlDefinition Name="Customers" DataSource="{Binding Path=Customers, Source={StaticResource NWindDataLoader}}">
+                            <local:GridControlDefinition.Columns>
+                                <local:GridColumnDefinition FieldName="CustomerID" Width="70" FixedWidth="True" />
+                                <local:GridColumnDefinition FieldName="CompanyName" />
+                                <local:GridColumnDefinition FieldName="Country" />
+                                <local:GridColumnDefinition FieldName="Region" />
+                                <local:GridColumnDefinition FieldName="City" />
+                                <local:GridColumnDefinition FieldName="Phone" Width="100" FixedWidth="True" />
+                                <local:GridColumnDefinition FieldName="ContactName" />
+                            </local:GridControlDefinition.Columns>
+                        </local:GridControlDefinition>
+                        <local:GridControlDefinition Name="Cars" DataSource="{Binding Path=DataSource, Source={StaticResource CarsData}}">
+                            <local:GridControlDefinition.Columns>
+                                <local:GridColumnDefinition FieldName="ID" />
+                                <local:GridColumnDefinition FieldName="Trademark" />
+                                <local:GridColumnDefinition FieldName="Model" />
+                                <local:GridColumnDefinition FieldName="Category" />
+                                <local:GridColumnDefinition FieldName="Price">
+                                    <local:GridColumnDefinition.EditSettings>
+                                        <dxe:TextEditSettings DisplayFormat="$0" MaskType="Numeric" />
+                                    </local:GridColumnDefinition.EditSettings>
+                                </local:GridColumnDefinition>
+                                <local:GridColumnDefinition FieldName="ImageSource" Header="Image" Width="200" FixedWidth="True">
+                                    <local:GridColumnDefinition.EditSettings>
+                                        <dxe:ImageEditSettings />
+                                    </local:GridColumnDefinition.EditSettings>
+                                </local:GridColumnDefinition>
+                            </local:GridControlDefinition.Columns>
+                        </local:GridControlDefinition>
+                        <local:GridControlDefinition Name="Orders" DataSource="{Binding Path=OrderDetails, Source={StaticResource NWindDataLoader}}">
+                            <local:GridControlDefinition.Columns>
+                                <local:GridColumnDefinition FieldName="OrderID" Header="ID" Width="50" />
+                                <local:GridColumnDefinition FieldName="ProductID" Header="Product">
+                                    <local:GridColumnDefinition.EditSettings>
+                                        <dxe:ComboBoxEditSettings ValueMember="ProductID" DisplayMember="ProductName" ItemsSource="{Binding Products, Source={StaticResource NWindDataLoader}}" />
+                                    </local:GridColumnDefinition.EditSettings>
+                                </local:GridColumnDefinition>
+                                <local:GridColumnDefinition FieldName="UnitPrice">
+                                    <local:GridColumnDefinition.EditSettings>
+                                        <dxe:TextEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="c" MaskCulture="en-US" />
+                                    </local:GridColumnDefinition.EditSettings>
+                                </local:GridColumnDefinition>
+                                <local:GridColumnDefinition FieldName="Quantity" />
+                                <local:GridColumnDefinition FieldName="Discount">
+                                    <local:GridColumnDefinition.EditSettings>
+                                        <dxe:SpinEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="p0" />
+                                    </local:GridColumnDefinition.EditSettings>
+                                </local:GridColumnDefinition>
+                            </local:GridControlDefinition.Columns>
+                        </local:GridControlDefinition>
+                    </local:GridControlDefinitionCollection>
+                </local:VerticalScrollingOptionsViewModel.ControlDefinitions>
+            </local:VerticalScrollingOptionsViewModel>
+        </ResourceDictionary>
+    </local:GridDemoModule.Resources>
+    <dxdb:DemoModuleControl SupressGroupFramePaddingInOptions="False">
+        <dxdb:DemoModuleControl.OptionsContent>
+            <StackPanel Orientation="Vertical" Margin="0,0,0,12">
+                <dxe:CheckEdit x:Name="allowCascadeUpdateCheckEdit" Margin="0,0,0,4" IsChecked="{Binding Path=View.AllowCascadeUpdate, Mode=TwoWay}" Content="Allow Cascade Update" />
+                <dxe:CheckEdit x:Name="allowPerPixelScrollingCheckEdit" Margin="0,0,0,12" IsChecked="{Binding Path=View.AllowPerPixelScrolling, Mode=TwoWay}" Content="Allow Per Pixel Scrolling" />
+                <ContentControl IsEnabled="{Binding View.AllowPerPixelScrolling}" Margin="0,0,0,12" HorizontalContentAlignment="Stretch">
+                    <dxdb:SliderControl x:Name="durationSlider" Margin="4,0,0,4" Header="Scroll Animation Duration" UOM="(ms)" Minimum="0" Maximum="2000" EditValue="{Binding Path=View.ScrollAnimationDuration, Mode=TwoWay}" SmallStep="1" LargeStep="1" ValueMinWidth="15" />
+                </ContentControl>
+                <dx:GroupFrame Header="Scroll Animation Mode" Margin="0,0,0,12" IsEnabled="{Binding View.AllowPerPixelScrolling}">
+                    <dxe:ListBoxEdit Background="{x:Null}" ShowBorder="False" x:Name="animationEffectListBoxEdit" Margin="0,0,30,0" EditValue="{Binding Path=View.ScrollAnimationMode, Mode=TwoWay}">
+                        <dxe:ListBoxEdit.StyleSettings>
+                            <dxe:RadioListBoxEditStyleSettings />
+                        </dxe:ListBoxEdit.StyleSettings>
+                        <dxe:ListBoxEdit.Items>
+                            <dxg:CustomComboBoxItem DisplayValue="Easy Out">
+                                <dxg:CustomComboBoxItem.EditValue>
+                                    <dxg:ScrollAnimationMode>EaseOut</dxg:ScrollAnimationMode>
+                                </dxg:CustomComboBoxItem.EditValue>
+                            </dxg:CustomComboBoxItem>
+                            <dxg:CustomComboBoxItem DisplayValue="Linear">
+                                <dxg:CustomComboBoxItem.EditValue>
+                                    <dxg:ScrollAnimationMode>Linear</dxg:ScrollAnimationMode>
+                                </dxg:CustomComboBoxItem.EditValue>
+                            </dxg:CustomComboBoxItem>
+                            <dxg:CustomComboBoxItem DisplayValue="Easy In/Out">
+                                <dxg:CustomComboBoxItem.EditValue>
+                                    <dxg:ScrollAnimationMode>EaseInOut</dxg:ScrollAnimationMode>
+                                </dxg:CustomComboBoxItem.EditValue>
+                            </dxg:CustomComboBoxItem>
+                        </dxe:ListBoxEdit.Items>
+                    </dxe:ListBoxEdit>
+                </dx:GroupFrame>
+                <dx:GroupFrame Header="Data Source">
+                    <dxe:ListBoxEdit x:Name="gridDataSourceListBoxEdit" ItemsSource="{Binding ControlDefinitions, Source={StaticResource ViewModel}}" SelectedItem="{Binding SelectedDefinition, Source={StaticResource ViewModel}, Mode=TwoWay}" ShowBorder="False" Background="{x:Null}" DisplayMember="Name">
+                        <dxe:ListBoxEdit.StyleSettings>
+                            <dxe:RadioListBoxEditStyleSettings />
+                        </dxe:ListBoxEdit.StyleSettings>
+                    </dxe:ListBoxEdit>
+                </dx:GroupFrame>
+            </StackPanel>
+        </dxdb:DemoModuleControl.OptionsContent>
+        <dxg:GridControl Name="grid" AutoGenerateColumns="KeepOld" ItemsSource="{Binding SelectedDefinition.DataSource, Source={StaticResource ViewModel}}" ColumnsSource="{Binding SelectedDefinition.Columns, Source={StaticResource ViewModel}}" ColumnGeneratorTemplate="{StaticResource ColumnTemplate}">
+            <dxmvvm:Interaction.Triggers>
+                    <dxmvvm:EventToCommand Command="{Binding Path=View.Commands.ClearFilter, ElementName=grid}" EventName="ItemsSourceChanged" />
+            </dxmvvm:Interaction.Triggers>
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="gridView" AllowCascadeUpdate="True" AllowPerPixelScrolling="True" AutoWidth="True" AllowEditing="False" />
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </dxdb:DemoModuleControl>
+</local:GridDemoModule>

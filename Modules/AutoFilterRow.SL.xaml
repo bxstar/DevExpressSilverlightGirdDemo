@@ -1,0 +1,42 @@
+<local:GridDemoModule x:Class="GridDemo.AutoFilterRow" mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+    <local:GridDemoModule.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GridDemo;component/Themes/generic.SL.xaml" />
+                <ResourceDictionary Source="/GridDemo;component/ModuleResources/AutoFilterRowTemplates.SL.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <local:DemoDataProvider x:Key="DemoDataProvider" />
+        </ResourceDictionary>
+    </local:GridDemoModule.Resources>
+
+    <dxdb:DemoModuleControl SupressGroupFramePaddingInOptions="False">
+        <dxdb:DemoModuleControl.OptionsContent>
+            <dxe:CheckEdit Content="Show Auto Filter Row" IsChecked="{Binding Path=View.ShowAutoFilterRow, Mode=TwoWay}" VerticalAlignment="Top" />
+        </dxdb:DemoModuleControl.OptionsContent>
+
+        <dxg:GridControl x:Name="grid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DesignTimeDataObjectType="local:OutlookData">
+            <dxg:GridControl.View>
+                <dxg:TableView ShowGroupedColumns="True" ShowAutoFilterRow="True" x:Name="gridView" AllowEditing="True" AutoWidth="True" ColumnHeaderCustomizationAreaTemplate="{StaticResource columnOptionsTemplate}" />
+            </dxg:GridControl.View>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="OID" Header="Id" MinWidth="50" Width="50" ReadOnly="true" />
+                <dxg:GridColumn Name="colPriority" FieldName="Priority" SortMode="Value" MinWidth="40" Width="40" ColumnFilterMode="DisplayText" />
+                <dxg:GridColumn FieldName="From" MinWidth="100" Width="100" />
+
+                <dxg:GridColumn FieldName="UserId" Header="To" MinWidth="100" Width="100" AutoFilterCondition="Equals">
+
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:ComboBoxEditSettings IsTextEditable="False" ValueMember="Id" DisplayMember="Name" ItemsSource="{Binding Users, Source={StaticResource DemoDataProvider}}" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="Sent" MinWidth="100" Width="100" GroupInterval="DateRange" AutoFilterCondition="Equals">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:DateEditSettings DisplayFormat="d" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn x:Name="colHoursActive" FieldName="HoursActive" MinWidth="70" Width="70" AutoFilterCondition="Like" />
+                <dxg:GridColumn x:Name="colHasAttachment" FieldName="HasAttachment" MinWidth="50" Width="50" AutoFilterCondition="Equals" />
+            </dxg:GridControl.Columns>
+        </dxg:GridControl>
+    </dxdb:DemoModuleControl>
+</local:GridDemoModule>

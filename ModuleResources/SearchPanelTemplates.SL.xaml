@@ -1,0 +1,18 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:local="clr-namespace:GridDemo">
+
+    <local:ShowSearchPanelModeToTextConverter x:Key="ShowSearchPanelModeToTextConverter" />
+    <local:FindModeToTextConverter x:Key="FindModeToTextConverter" />
+    <dx:IntToBooleanConverter x:Key="IntToBooleanConverter" />
+    <dx:IntToBooleanConverter x:Key="IntToBooleanConverterInvert" Invert="True" />
+    <dx:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
+    <dx:BoolToVisibilityInverseConverter x:Key="boolToVisibilityInverseConverter" />
+    <local:SearchPanelModeConverter x:Key="SearchPanelModeConverter" />
+
+    <DataTemplate x:Key="showSearchPanelContentTemplate">
+        <TextBlock Text="{Binding Converter={StaticResource ShowSearchPanelModeToTextConverter}}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="findModeTemplate">
+        <TextBlock Text="{Binding Converter={StaticResource FindModeToTextConverter}}" />
+    </DataTemplate>
+</ResourceDictionary>

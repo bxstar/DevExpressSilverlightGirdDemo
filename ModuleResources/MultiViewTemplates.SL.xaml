@@ -1,0 +1,189 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:GridDemo" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/GridDemo;component/ModuleResources/SharedResources.SL.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <local:GroupNameToImageConverter x:Key="GroupNameToImageConverter" />
+    <local:BirthdayImageVisibilityConverter x:Key="BirthdayImageVisibilityConverter" />
+    <local:CountryToFlagImageConverter x:Key="CountryToFlagImageConverter" />
+    <dx:BooleanToVisibilityConverterExtension x:Key="BooleanToVisibilityConverter" Invert="True" />
+
+    <DataTemplate x:Key="colBirthDateCellTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <dxe:DateEdit x:Name="PART_Editor">
+            </dxe:DateEdit>
+            <Grid Grid.Column="1" Visibility="{Binding Path=IsEditorActive, ElementName=PART_Editor, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Image Margin="4,0,4,0" Source="/GridDemo;component/Images/MultiView/BirthDate.png" Visibility="{Binding Path=EditValue, ElementName=PART_Editor, Converter={StaticResource BirthdayImageVisibilityConverter}}" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Birthday Coming" />
+                    </ToolTipService.ToolTip>
+                </Image>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="colGroupNameGroupValueTemplate">
+        <Grid Margin="5,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Image Source="{Binding Path=RowData.Row.GroupName, Converter={StaticResource GroupNameToImageConverter}}" Stretch="None" VerticalAlignment="Center">
+                <ToolTipService.ToolTip>
+                    <TextBlock Text="{Binding Path=RowData.Row.GroupName}" />
+                </ToolTipService.ToolTip>
+            </Image>
+            <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Path=RowData.Row.GroupName}" Padding="5,0,0,0" Grid.Column="1" />
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="colGroupNameCellTemplate">
+        <Image Source="{Binding Path=RowData.Row.GroupName, Converter={StaticResource GroupNameToImageConverter}}" Width="16" Stretch="Uniform">
+            <ToolTipService.ToolTip>
+                <TextBlock Text="{Binding Path=RowData.Row.GroupName}" />
+            </ToolTipService.ToolTip>
+        </Image>
+    </DataTemplate>
+    <local:ViewToBooleanConverter x:Key="ViewToBooleanConverter" />
+    <DataTemplate x:Key="customTemplateWithSummaryCustomization">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
+
+            <dxe:ComboBoxEdit Style="{StaticResource GroupSummaryComboBoxEdit}" ItemsSource="{Binding SummaryItemTypes, Source={StaticResource DemoDataProvider}}" EditValue="{Binding Path=SummaryItem.SummaryType, Mode=TwoWay}" ToolTipService.ToolTip="Select summary type" Foreground="Black" Cursor="Hand" />
+            <TextBlock VerticalAlignment="Center" Text="(" Foreground="Black" />
+            <dxe:ComboBoxEdit Style="{StaticResource GroupSummaryComboBoxEdit}" ItemsSource="{Binding SummaryFieldNames, Source={StaticResource DemoDataProvider}}" EditValue="{Binding Path=SummaryItem.FieldName, Mode=TwoWay}" ToolTipService.ToolTip="Select summary column" Foreground="Black" Cursor="Hand" />
+            <TextBlock VerticalAlignment="Center" Text=")=" Foreground="Black" />
+            <TextBlock VerticalAlignment="Center" Text="{Binding SummaryValue, Converter={StaticResource FormatStringConverter}}" Foreground="Black" />
+
+        </StackPanel>
+    </DataTemplate>
+    <local:CustomNodeImageSelector x:Key="imageSelector" />
+    <local:EmployeeToOrdersConverter x:Key="employeeToOrdersConverter" />
+    <DataTemplate x:Key="cardTemplate">
+        <StackPanel Orientation="Vertical">
+            <Grid Margin="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <dxe:ImageEdit Grid.Column="0" Stretch="UniformToFill" Height="70" Width="64" Source="{Binding Path=DataContext.ImageData}" ShowMenu="False" />
+                <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="12,0,12,0" Grid.Column="1">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                        <TextBlock FontWeight="Bold" Text="Title:" />
+                        <TextBlock Text="{Binding Path=DataContext.JobTitle}" TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                        <TextBlock FontWeight="Bold" Text="First Name:" />
+                        <TextBlock Text="{Binding Path=DataContext.FirstName}" TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontWeight="Bold" Text="Last Name:" />
+                        <TextBlock Text="{Binding Path=DataContext.LastName}" TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <dx:DXTabControl MinHeight="160" SelectedIndex="{Binding Path=RowState.(local:CardTemplates.SelectedTabIndex), Mode=TwoWay}" Style="{StaticResource demoTabControl}" Margin="0,12,0,0">
+                <dx:DXTabItem Header="Contact Info" Style="{StaticResource demoTabItem}">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <TextBlock FontWeight="Bold" Text="Address:" />
+                            <TextBlock Text="{Binding Path=DataContext.AddressLine1}" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <TextBlock FontWeight="Bold" Text="City:" />
+                            <TextBlock Text="{Binding Path=DataContext.City}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <TextBlock FontWeight="Bold" Text="Postal Code:" />
+                            <TextBlock Text="{Binding Path=DataContext.PostalCode}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <TextBlock FontWeight="Bold" Text="Country:" />
+                            <TextBlock Text="{Binding Path=DataContext.CountryRegionName}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontWeight="Bold" Text="Phone:" />
+                            <TextBlock Text="{Binding Path=DataContext.Phone}" />
+                        </StackPanel>
+                    </StackPanel>
+                </dx:DXTabItem>
+                <dx:DXTabItem Header="Notes" Style="{StaticResource demoTabItem}">
+                    <Grid ShowGridLines="False" VerticalAlignment="Top">
+                        <Grid.Resources>
+                            <dxdb:DateTimeShortPatternCoverter x:Key="dateTimeConverter" />
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock FontWeight="Bold">Hired at:</TextBlock>
+                        <TextBlock Grid.Column="1" Text="{Binding Path=DataContext.HireDate, Converter={StaticResource dateTimeConverter}}" />
+                        <TextBlock FontWeight="Bold" Grid.Row="1">Birth Date:</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=DataContext.BirthDate, Converter={StaticResource dateTimeConverter}}" />
+                    </Grid>
+                </dx:DXTabItem>
+            </dx:DXTabControl>
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="colInfoHeaderTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Image Source="/GridDemo;component/Images/MultiView/Contacts.png" Stretch="None" />
+            <Border x:Name="phoneBorder" Cursor="Hand" Grid.Column="1">
+                <TextBlock Style="{StaticResource TextBlockStyle}" x:Name="tbPhone" Margin="4,0,0,0" Text="Phone">
+                    <TextBlock.FontWeight>
+                        <Binding>
+                            <Binding.Converter>
+                                <local:ColumnHeaderTextConverter ColumnName="Phone" />
+                            </Binding.Converter>
+                        </Binding>
+                    </TextBlock.FontWeight>
+                    <dxmvvm:Interaction.Triggers>
+                        <dxmvvm:EventToCommand EventName="MouseLeftButtonDown" Command="{Binding Path=(dxg:BaseGridColumnHeader.GridColumn).DataContext.ChangeFieldNameCommand, RelativeSource={RelativeSource TemplatedParent}}" CommandParameter="Phone" />
+                    </dxmvvm:Interaction.Triggers>
+                </TextBlock>
+            </Border>
+            <TextBlock Text="/" Margin="4,0,0,0" VerticalAlignment="Center" Grid.Column="2" />
+            <Border x:Name="addressBorder" Cursor="Hand" Grid.Column="3">
+                <TextBlock Style="{StaticResource TextBlockStyle}" x:Name="tbAddress" Margin="4,0,0,0" Text="Address">
+                    <TextBlock.FontWeight>
+                        <Binding>
+                            <Binding.Converter>
+                                <local:ColumnHeaderTextConverter ColumnName="Address Line1" />
+                            </Binding.Converter>
+                        </Binding>
+                    </TextBlock.FontWeight>
+                    <dxmvvm:Interaction.Triggers>
+                        <dxmvvm:EventToCommand EventName="MouseLeftButtonDown" Command="{Binding Path=(dxg:BaseGridColumnHeader.GridColumn).DataContext.ChangeFieldNameCommand, RelativeSource={RelativeSource TemplatedParent}}" CommandParameter="AddressLine1" />
+                    </dxmvvm:Interaction.Triggers>
+                </TextBlock>
+            </Border>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="ordersDetailHeaderTemplate">
+        <StackPanel Orientation="Horizontal" MinHeight="24">
+            <Image Margin="0,0,3,0" Source="/GridDemo;component/Images/MultiView/Orders.png" VerticalAlignment="Center" />
+            <TextBlock Text="Orders" VerticalAlignment="Center" />
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="cardHeaderTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Path=Data.FirstName}" TextWrapping="NoWrap" />
+            <TextBlock Text="{Binding Path=Data.LastName}" TextWrapping="NoWrap" Margin="8,0,0,0" />
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="ImageDataCellTemplate">
+        <dxe:ImageEdit x:Name="PART_Editor" Stretch="Uniform" Height="70" />
+    </DataTemplate>
+</ResourceDictionary>

@@ -1,0 +1,10 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/GridDemo;component/Controls/ControlStyles/DemoColumnChooserControl.SL.xaml" />
+        <ResourceDictionary Source="/GridDemo;component/Controls/ControlStyles/InplaceProgressBar.SL.xaml" />
+        <ResourceDictionary Source="/GridDemo;component/Controls/ControlStyles/SummaryComboBox.SL.xaml"/>
+        <ResourceDictionary Source="/GridDemo;component/Controls/ControlStyles/HintControl.SL.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

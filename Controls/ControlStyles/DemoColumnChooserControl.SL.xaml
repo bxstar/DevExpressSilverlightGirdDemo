@@ -1,0 +1,14 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:local="clr-namespace:GridDemo">
+    <Style TargetType="local:DemoColumnChooserControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DemoColumnChooserControl">
+                    <dx:NonLogicalDecorator>
+                        <dxg:ColumnChooserControl x:Name="PART_ColumnChooserControl" Owner="{TemplateBinding View}" Columns="{Binding Path=Owner.ColumnChooserColumns, RelativeSource={RelativeSource Self}}" />
+                    </dx:NonLogicalDecorator>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,17 @@
+<UserControl x:Class="GridDemo.MultiSelectionOptionsControl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors">
+    <dx:GroupFrame x:Name="groupBoxControl">
+  <StackPanel Orientation="Vertical">
+   <dxe:ComboBoxEdit x:Name="comboBoxControl" IsTextEditable="False" />
+   <StackPanel>
+    <Button Name="SelectButton" Margin="0,4,0,0" Content="Add to Selection" Click="SelectButtonClickInClass" />
+    <Button Name="UnselectButton" Margin="0,4,0,0" Content="Remove from Selection" Click="UnselectButtonClickInClass" />
+    <Button Name="ReselectButton" Margin="0,4,0,0" Click="ReselectButtonClickInClass">
+     <StackPanel Orientation="Horizontal" Margin="0">
+      <TextBlock Text="Select Only This" Margin="0" />
+      <TextBlock Text="{Binding Path=Header, ElementName=groupBoxControl}" Margin="0" />
+     </StackPanel>
+    </Button>
+   </StackPanel>
+  </StackPanel>
+    </dx:GroupFrame>
+</UserControl>

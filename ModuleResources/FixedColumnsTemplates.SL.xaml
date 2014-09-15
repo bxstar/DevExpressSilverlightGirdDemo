@@ -1,0 +1,41 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:local="clr-namespace:GridDemo" xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/GridDemo;component/Themes/generic.SL.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <local:RoundValueConverter x:Key="RoundValueConverter" />
+    <DataTemplate x:Key="columnOptionsTemplate">
+        <StackPanel x:Name="options" dx:DXDockPanel.Dock="Right" Orientation="Horizontal" dx:DragManager.IsStartDragPlace="false">
+            <dxg:OptionsToggleButton x:Name="showOptionsButton" Width="15" Height="15" Margin="0" ToolTipService.ToolTip="Choose the column's fixed style" />
+            <dx:PopupBase x:Name="optionsPopup" IsOpen="{Binding ElementName=showOptionsButton, Path=IsChecked, Mode=TwoWay}" PlacementTarget="{Binding ElementName=showOptionsButton}" Placement="Bottom" StaysOpen="False">
+
+                            <dx:PopupBase.DataContext>
+                                <Binding Path="Content" RelativeSource="{RelativeSource TemplatedParent}" />
+                            </dx:PopupBase.DataContext>
+
+
+                <dx:MouseEventsEndPoint>
+                    <dx:PopupBorderControl>
+                        <dx:GroupFrame Margin="11" Header="Fixed Style">
+                            <dxe:ListBoxEdit Margin="0,0,41,0" ShowBorder="False" SelectedItem="{Binding Path=Column.Fixed, Mode=TwoWay}" Background="{x:Null}">
+                                <dxe:ListBoxEdit.StyleSettings>
+                                    <dxe:RadioListBoxEditStyleSettings />
+                                </dxe:ListBoxEdit.StyleSettings>
+                                <dxe:ListBoxEdit.Items>
+                                    <dxg:FixedStyle>None</dxg:FixedStyle>
+                                    <dxg:FixedStyle>Left</dxg:FixedStyle>
+                                    <dxg:FixedStyle>Right</dxg:FixedStyle>
+                                </dxe:ListBoxEdit.Items>
+                                <dxmvvm:Interaction.Behaviors>
+                                    <local:RoutedEventCommandHelper Event="{local:EditValueChangedEvent}" Command="{Binding View.DataContext.ClosePopupCommand}" />
+                                </dxmvvm:Interaction.Behaviors>
+                            </dxe:ListBoxEdit>
+                        </dx:GroupFrame>
+                    </dx:PopupBorderControl>
+                </dx:MouseEventsEndPoint>
+            </dx:PopupBase>
+        </StackPanel>
+
+    </DataTemplate>
+</ResourceDictionary>

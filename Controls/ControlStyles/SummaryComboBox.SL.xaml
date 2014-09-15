@@ -1,0 +1,24 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:GridDemo" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core">
+
+
+    <Style x:Key="GroupSummaryComboBoxEdit" TargetType="dxe:ComboBoxEdit">
+        <Setter Property="Margin" Value="2,0,2,0" />
+        <Setter Property="IsTextEditable" Value="False" />
+        <Setter Property="EditMode" Value="InplaceActive" />
+        <Setter Property="AllowDefaultButton" Value="False" />
+
+
+        <Setter Property="EditNonEditableInplaceTemplate">
+
+            <Setter.Value>
+                <ControlTemplate>
+                    <dx:DXDockPanel>
+                        <Path dx:DXDockPanel.Dock="Right" x:Name="Path_Copy1" Stretch="Fill" Fill="{TemplateBinding Foreground}" Data="F1 M 605,479L 598,479L 601,485L 602,485L 605,479 Z" Width="5" Height="4" Margin="3,2,3,0" />
+                        <TextBlock x:Name="PART_Editor" Text="{Binding Path=DisplayText, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </dx:DXDockPanel>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

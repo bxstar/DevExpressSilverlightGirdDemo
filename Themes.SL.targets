@@ -1,0 +1,85 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Reference Include="DevExpress.Xpf.LayoutControl.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.LayoutControl.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.DeepBlue.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.DeepBlue.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.LightGray.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.LightGray.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2007Black.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.Office2007Black.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2007Blue.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.Office2007Blue.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2007Silver.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.Office2007Silver.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Seven.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.Seven.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2010Black.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.Office2010Black.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.MetropolisDark.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.MetropolisDark.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.TouchlineDark.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.TouchlineDark.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2013.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.Office2013.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.VS2010.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.VS2010.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.DXStyle.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.DXStyle.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2010Blue.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.Office2010Blue.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2010Silver.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.Office2010Silver.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.MetropolisLight.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.MetropolisLight.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+
+    <Reference Include="DevExpress.Xpf.Themes.Office2013LightGray.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.Office2013LightGray.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+
+    <Reference Include="DevExpress.Xpf.Themes.Office2013DarkGray.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.Office2013DarkGray.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+
+    <Reference Include="DevExpress.Xpf.Themes.HybridApp.v14.1">
+      <HintPath>..\..\..\Bin\Silverlight\DevExpress.Xpf.Themes.HybridApp.v14.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+
+
+  </ItemGroup>
+</Project>

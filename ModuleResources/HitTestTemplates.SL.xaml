@@ -1,0 +1,9 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:local="clr-namespace:GridDemo">
+
+    <dx:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
+    <dxg:TableView x:Key="tableView" ShowFixedTotalSummary="True" IsTotalSummaryMenuEnabled="False" ShowGroupedColumns="True" AutoWidth="False" ShowAutoFilterRow="True" NewItemRowPosition="Top" AllowDrop="True" />
+
+    <DataTemplate x:Key="hitInfoTemplate">
+        <local:NameTextControl NameValue="{Binding Name}" TextValue="{Binding Text}" />
+    </DataTemplate>
+</ResourceDictionary>

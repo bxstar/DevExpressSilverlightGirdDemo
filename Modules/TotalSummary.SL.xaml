@@ -1,0 +1,54 @@
+<local:GridDemoModule x:Class="GridDemo.TotalSummary" mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:global="clr-namespace:System.Globalization;assembly=mscorlib" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+    <local:GridDemoModule.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GridDemo;component/Themes/generic.SL.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <dxdb:NWindDataLoader x:Key="NWindDataLoader" />
+            <local:DemoDataProvider x:Key="DemoDataProvider" />
+            <dx:FormatStringConverter x:Key="FormatStringConverter" FormatString="0.##" />
+        </ResourceDictionary>
+    </local:GridDemoModule.Resources>
+    <dxdb:DemoModuleControl SupressGroupFramePaddingInOptions="False">
+        <dxdb:DemoModuleControl.OptionsContent>
+            <StackPanel Orientation="Vertical">
+                <dxe:CheckEdit x:Name="cbTotalSummaryPanelsContextMenuEndbled" IsChecked="{Binding Path=View.IsTotalSummaryMenuEnabled, Mode=TwoWay}" Content="Summary Context Menu Enabled" Margin="0,0,6,12" />
+                <dxe:CheckEdit x:Name="cbShowFooter" IsChecked="{Binding Path=View.ShowTotalSummary, Mode=TwoWay}" Content="Show Summary Panel" Margin="0,0,6,12" />
+                <dxe:CheckEdit x:Name="cbShowFixedTotalSummary" IsChecked="{Binding Path=View.ShowFixedTotalSummary, Mode=TwoWay}" Content="Show Fixed Total Summary Panel" Margin="0,0,6,12" />
+                <Button x:Name="btnTotalSummaryEditor" Content="Total Summary Editor" Click="btnTotalSummaryEditor_Click" Margin="0,0,0,12" Height="22" />
+                <Button x:Name="btnFixedTotalSummaryEditor" Content="Fixed Total Summary Editor" Click="btnFixedTotalSummaryEditor_Click" Margin="0,0,0,12" Height="22" />
+            </StackPanel>
+        </dxdb:DemoModuleControl.OptionsContent>
+        <dxg:GridControl Grid.Row="1" Name="grid" Grid.Column="0" ItemsSource="{Binding Path=Invoices, Source={StaticResource NWindDataLoader}}">
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="Country" MinWidth="80" Width="80" />
+                <dxg:GridColumn FieldName="City" MinWidth="100" Width="100" />
+                <dxg:GridColumn FieldName="UnitPrice" MinWidth="150" Width="150">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="$0.00" MaskType="Numeric" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="Discount" MinWidth="150" Width="150">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="0%" MaskType="Numeric" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="Total" UnboundType="Decimal" MinWidth="150" Width="150" UnboundExpression="([UnitPrice] * [Quantity]) * (1 - [Discount])">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="$0.00" MaskType="Numeric" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem SummaryType="Count" Alignment="Right" />
+                <dxg:GridSummaryItem FieldName="UnitPrice" SummaryType="Min" ShowInColumn="UnitPrice" />
+                <dxg:GridSummaryItem FieldName="Discount" SummaryType="Max" ShowInColumn="Discount" />
+                <dxg:GridSummaryItem FieldName="Total" SummaryType="Sum" ShowInColumn="Total" />
+            </dxg:GridControl.TotalSummary>
+            <dxg:GridControl.View>
+                <dxg:TableView NavigationStyle="Row" ShowTotalSummary="True" ShowFixedTotalSummary="True" AutoWidth="True">
+                </dxg:TableView>
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </dxdb:DemoModuleControl>
+</local:GridDemoModule>

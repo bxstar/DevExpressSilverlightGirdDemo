@@ -1,0 +1,1053 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B1811121-9E3F-4DC3-94F0-6F2C52B473F1}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <BaseIntermediateOutputPath>obj.SL</BaseIntermediateOutputPath>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GridDemo</RootNamespace>
+    <AssemblyName>GridDemo</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>zh-Hans</SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>GridDemo.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>GridDemo.App</SilverlightAppEntry>
+    <TestPageFileName>GridDemoTestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <EnableOutOfBrowser>false</EnableOutOfBrowser>
+    <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
+    <UsePlatformExtensions>true</UsePlatformExtensions>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin.SL\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;SL</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin.SL\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;SL</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ExtMap Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;SL;EXTMAP</DefineConstants>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <OutputPath>Bin.SL\ExtMap Debug\</OutputPath>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ExtMap Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin.SL\ExtMap Release\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;SL;EXTMAP</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugLocal|AnyCPU' ">
+    <UsePlatformExtensions>false</UsePlatformExtensions>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Bin.SL\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;SL</DefineConstants>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <NoConfig>true</NoConfig>
+  </PropertyGroup>
+  <ItemGroup>
+    <Resource Include="Images\WarningIcon.png" />
+    <EmbeddedResource Include="Data\Countries.xml" />
+    <EmbeddedResource Include="Data\EmbeddedData.txt" />
+    <None Include="Dll\SL\System.Windows.Controls.Data.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Dll\SL\System.Windows.Controls.DomainServices.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Dll\SL\System.Windows.Interactivity.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Resource Include="Images\MultiView\GroupName\Administration.png" />
+    <Resource Include="Images\MultiView\GroupName\Inventory.png" />
+    <Resource Include="Images\MultiView\GroupName\Manufacturing.png" />
+    <Resource Include="Images\MultiView\GroupName\Quality.png" />
+    <Resource Include="Images\MultiView\GroupName\Research.png" />
+    <Resource Include="Images\MultiView\GroupName\Sales.png" />
+    <Resource Include="Images\MultiView\BirthDate.png" />
+    <Resource Include="Images\MultiView\Contacts.png" />
+    <Resource Include="Images\MultiView\Country.png" />
+    <Resource Include="Images\MultiView\FullName.png" />
+    <Resource Include="Images\MultiView\JobTitle.png" />
+    
+    
+    <Resource Include="Images\MultiView\Orders.png" />
+    <EmbeddedResource Include="Data\LayoutSamples\BandedLayout.xml" />
+    <Content Include="Themes.SL.targets" />
+    <Content Include="DevExpress.Build.XamlResourceProcessing.targets" />
+    <Reference Include="DevExpress.Data.v14.1">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v14.1.Core">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Charts.v14.1">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.DemoData.v14.1.Core">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v14.1.Core">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Core.v14.1">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Core.v14.1.Extensions">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Printing.v14.1">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.DemoBase.v14.1">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v14.1.Core">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v14.1">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v14.1.Extensions">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Layout.v14.1.Core">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Docking.v14.1">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpo.v14.1">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Mvvm.v14.1">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mscorlib"><Private>False</Private></Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization"><Private>False</Private></Reference>
+    <Reference Include="System.ServiceModel"><Private>False</Private></Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Client">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Client.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel.Extensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web"><Private>False</Private></Reference>
+    <Reference Include="System.ServiceModel.Web.Extensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows"><Private>False</Private></Reference>
+    <Reference Include="system"><Private>False</Private></Reference>
+    <Reference Include="System.Core"><Private>False</Private></Reference>
+    <Reference Include="System.Net"><Private>False</Private></Reference>
+    <Reference Include="System.Windows.Controls.Data">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Controls.DomainServices">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml"><Private>False</Private></Reference>
+    <Reference Include="System.Windows.Browser"><Private>False</Private></Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Serialization">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' != 'ExtMap Release|AnyCPU' AND '$(Configuration)|$(Platform)' != 'ExtMap Debug|AnyCPU' ">
+    <Reference Include="DevExpress.DemoData.v14.1">
+      <HintPath></HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\CollectionViewNavigator.xaml.cs">
+      <DependentUpon>CollectionViewNavigator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Converters.cs" />
+    <Compile Include="Controls\CustomClasses.cs" />
+    <Compile Include="Controls\DemoColumnChooserControl.cs" />
+    <Compile Include="Controls\DemoModuleControl.cs" />
+    <Compile Include="ModuleResources\AsyncLookUpEditViewModel.cs" />
+    <Compile Include="ModuleResources\AutoFilterRowClasses.cs" />
+    <Compile Include="ModuleResources\BindingToDynamicObjectClasses.cs" />
+    <Compile Include="ModuleResources\BindingToXMLClasses.cs" />
+    <Compile Include="ModuleResources\CollectionInfo.cs" />
+    <Compile Include="ModuleResources\CollectionViewViewModel.cs" />
+    <Compile Include="ModuleResources\ColumnChooserClasses.cs" />
+    <Compile Include="ModuleResources\DataAnnotationsViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModuleResources\DataAnnotations\DataAnnotationsElement1.cs" />
+    <Compile Include="ModuleResources\DataAnnotations\DataAnnotationsElement1_FluentAPI.cs" />
+    <Compile Include="ModuleResources\DataAnnotations\DataAnnotationsElement2.cs" />
+    <Compile Include="ModuleResources\DataAnnotations\DataAnnotationsElement2_FluentAPI.cs" />
+    <Compile Include="ModuleResources\DataAnnotations\DataAnnotationsElement3.cs" />
+    <Compile Include="ModuleResources\DataAnnotations\DataAnnotationsElement3_FluentAPI.cs" />
+    <Compile Include="ModuleResources\DataAnnotations\DataAnnotationsElement4.cs" />
+    <Compile Include="ModuleResources\DataAnnotations\DataAnnotationsElement4_FluentAPI.cs" />
+    <Compile Include="ModuleResources\DataAnnotations\MaskedInputData.cs" />
+    <Compile Include="ModuleResources\DataAnnotations\MaskedInputData_FluentAPI.cs" />
+    <Compile Include="ModuleResources\DataErrorInfoClasses.cs" />
+    <Compile Include="ModuleResources\DataGenerator.cs" />
+    <Compile Include="ModuleResources\DragDropViewModel.cs" />
+    <Compile Include="ModuleResources\ExpandCollapseGroupsClasses.cs" />
+    <Compile Include="ModuleResources\FilteringClasses.cs" />
+    <Compile Include="ModuleResources\GroupIntervalsClasses.cs" />
+    <Compile Include="ModuleResources\GroupSummariesAlignmentViewModel.cs" />
+    <Compile Include="ModuleResources\GroupSummaryClasses.cs" />
+    <Compile Include="ModuleResources\GroupSummaryViewModel.cs" />
+    <Compile Include="ModuleResources\HitTestClasses.cs" />
+    <Compile Include="ModuleResources\HyperLinkAttachedBehavior.cs" />
+    <Compile Include="ModuleResources\InplaceLookUpEditClasses.cs" />
+    <Compile Include="ModuleResources\LargeDataSetClasses.cs" />
+    <Compile Include="ModuleResources\LiveDataClasses.cs" />
+    <Compile Include="ModuleResources\MasterDetailViewModel.cs" />
+    <Compile Include="ModuleResources\MasterDetailWithRIAViewModel.cs" />
+    <Compile Include="ModuleResources\MultiEditorsClasses.cs" />
+    <Compile Include="ModuleResources\MultipleGroupingClasses.cs" />
+    <Compile Include="ModuleResources\MultiSelectionClasses.cs" />
+    <Compile Include="ModuleResources\MultiViewClasses.cs" />
+    <Compile Include="ModuleResources\MultiViewViewModel.cs" />
+    <Compile Include="ModuleResources\PLinqInstantFeedbackClasses.cs" />
+    <Compile Include="ModuleResources\PLinqInstantFeedbackViewModel.cs" />
+    <Compile Include="ModuleResources\PrintMasterDetailViewModel.cs" />
+    <Compile Include="ModuleResources\RiaInstantFeedbackViewModel.cs" />
+    <Compile Include="ModuleResources\RoutedEventsHelper.cs" />
+    <Compile Include="ModuleResources\RowTemplateClasses.cs" />
+    <Compile Include="ModuleResources\SearchPanelClasses.cs" />
+    <Compile Include="ModuleResources\SearchPanelViewModel.cs" />
+    <Compile Include="ModuleResources\SerializationClasses.cs" />
+    <Compile Include="ModuleResources\TreeListViewClasses.cs" />
+    <Compile Include="ModuleResources\UnboundColumnsClasses.cs" />
+    <Compile Include="ModuleResources\ValidationAttributes.cs" />
+    <Compile Include="ModuleResources\ValidationViewModel.cs" />
+    <Compile Include="ModuleResources\Validation\ValidationData.cs" />
+    <Compile Include="ModuleResources\Validation\ValidationData_FluentAPI.cs" />
+    <Compile Include="ModuleResources\VerticalScrollingOptionsViewModel.cs" />
+    <Compile Include="ModuleResources\WcfInstantFeedbackViewModel.cs" />
+    <Compile Include="ModuleResources\XPOInstantFeedbackClasses.cs" />
+    <Compile Include="Modules\DataAnnotations.xaml.cs">
+      <DependentUpon>DataAnnotations.SL.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\EmbeddedTableView.xaml.cs">
+      <DependentUpon>EmbeddedTableView.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\FixedBands.xaml.cs">
+      <DependentUpon>FixedBands.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\GridSearchPanel.xaml.cs">
+      <DependentUpon>GridSearchPanel.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MasterDetailWithRIA.xaml.cs">
+      <DependentUpon>MasterDetailWithRIA.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PrintMasterDetail.xaml.cs">
+      <DependentUpon>PrintMasterDetail.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WcfSCService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.datasvcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DemoValuesProvider.cs" />
+    <Compile Include="Controls\GridControlDefinition.cs" />
+    <Compile Include="Controls\InternetConnectionControl.xaml.cs">
+      <DependentUpon>InternetConnectionControl.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MasterDetailItems.cs" />
+    <Compile Include="Controls\MiltiSelectionOptionsControl.xaml.cs">
+      <DependentUpon>MiltiSelectionOptionsControl.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OrderDataGenerator.cs" />
+    <Compile Include="Controls\OutlookDataGenerator.cs" />
+    <Compile Include="Controls\RiaSC.Web.g.cs" />
+    <Compile Include="Controls\SalesByYearData.cs" />
+    <Compile Include="Controls\StoryboardContainer.cs" />
+    <Compile Include="Controls\TabHeaderPrintInfoControl.xaml.cs">
+      <DependentUpon>TabHeaderPrintInfoControl.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Tasks.cs" />
+    <Compile Include="Data\CountriesData.cs" />
+    <Compile Include="Data\XPOServiceHelper.cs" />
+    <Compile Include="DemoTesting\Fixtures.cs" />
+    <Compile Include="Modules\AutoFilterRow.xaml.cs">
+      <DependentUpon>AutoFilterRow.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\BandedView.xaml.cs">
+      <DependentUpon>BandedView.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\BindingToDynamicObject.xaml.cs">
+      <DependentUpon>BindingToDynamicObject.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\BindingToXML.xaml.cs">
+      <DependentUpon>BindingToXML.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\CellsSelection.xaml.cs">
+      <DependentUpon>CellsSelection.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\CollectionView.xaml.cs">
+      <DependentUpon>CollectionView.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ColumnChooser.xaml.cs">
+      <DependentUpon>ColumnChooser.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ContextMenu.xaml.cs">
+      <DependentUpon>ContextMenu.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\GroupSummariesAlignment.xaml.cs">
+      <DependentUpon>GroupSummariesAlignment.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MasterDetailView.xaml.cs">
+      <DependentUpon>MasterDetailView.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MultiView.xaml.cs">
+      <DependentUpon>MultiView.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\CurrentDataRow.xaml.cs">
+      <DependentUpon>CurrentDataRow.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataErrorInfo.xaml.cs">
+      <DependentUpon>DataErrorInfo.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DragDrop.xaml.cs">
+      <DependentUpon>DragDrop.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ExpandCollapseGroups.xaml.cs">
+      <DependentUpon>ExpandCollapseGroups.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\FilterControl.xaml.cs">
+      <DependentUpon>FilterControl.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Filtering.xaml.cs">
+      <DependentUpon>Filtering.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\FixedColumns.xaml.cs">
+      <DependentUpon>FixedColumns.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Grouping.xaml.cs">
+      <DependentUpon>Grouping.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\GroupIntervals.xaml.cs">
+      <DependentUpon>GroupIntervals.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\GroupSummary.xaml.cs">
+      <DependentUpon>GroupSummary.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\HitTest.xaml.cs">
+      <DependentUpon>HitTest.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\InplaceEditors.xaml.cs">
+      <DependentUpon>InplaceEditors.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\InplaceLookUpEdit.xaml.cs">
+      <DependentUpon>InplaceLookUpEdit.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\LargeDataSet.xaml.cs">
+      <DependentUpon>LargeDataSet.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\LiveData.xaml.cs">
+      <DependentUpon>LiveData.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\LookUpEdit.xaml.cs">
+      <DependentUpon>LookUpEdit.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MultiEditors.xaml.cs">
+      <DependentUpon>MultiEditors.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MultipleGrouping.xaml.cs">
+      <DependentUpon>MultipleGrouping.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\MultiSelection.xaml.cs">
+      <DependentUpon>MultiSelection.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\NewItemRow.xaml.cs">
+      <DependentUpon>NewItemRow.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PagedCollectionView.xaml.cs">
+      <DependentUpon>PagedCollectionView.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PLinqInstantFeedback.xaml.cs">
+      <DependentUpon>PLinqInstantFeedback.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PrintOptions.xaml.cs">
+      <DependentUpon>PrintOptions.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PrintTemplates.xaml.cs">
+      <DependentUpon>PrintTemplates.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\RowTemplate.xaml.cs">
+      <DependentUpon>RowTemplate.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Serialization.xaml.cs">
+      <DependentUpon>Serialization.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SortBySummary.xaml.cs">
+      <DependentUpon>SortBySummary.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\TableView.xaml.cs">
+      <DependentUpon>TableView.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\TotalSummary.xaml.cs">
+      <DependentUpon>TotalSummary.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\TreeListView.xaml.cs">
+      <DependentUpon>TreeListView.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\UnboundColumns.xaml.cs">
+      <DependentUpon>UnboundColumns.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Validation.xaml.cs">
+      <DependentUpon>Validation.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\RIAInstantFeedback.xaml.cs">
+      <DependentUpon>RIAInstantFeedback.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\RIAServices.xaml.cs">
+      <DependentUpon>RIAServices.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\VerticalScrollingOptions.xaml.cs">
+      <DependentUpon>VerticalScrollingOptions.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\WCFInstantFeedback.xaml.cs">
+      <DependentUpon>WCFInstantFeedback.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\XPOInstantFeedback.xaml.cs">
+      <DependentUpon>XPOInstantFeedback.SL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    
+    <None Include="Properties\AppManifest.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\CollectionViewNavigator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ControlStyles\MasterDetailTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Controls\InternetConnectionControl.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Controls\MiltiSelectionOptionsControl.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Controls\MultiViewTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Controls\TabHeaderPrintInfoControl.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    
+    
+    <Page Include="ModuleResources\AutoFilterRowTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\CurrentDataRowTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\DragDropTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\EmbeddedTableViewTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\ExpandCollapseGroupsTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\FilteringTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\FixedColumnsTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\GroupSummaryTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\HitTestTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\InplaceEditorsTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\InplaceLookupEditResources.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\LiveDataTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\LookUpEditTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\MultiEditorsTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\MultipleGroupingTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\MultiSelectionTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\MultiViewTemplates.SL.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    
+    <Page Include="ModuleResources\MultiViewViewTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ModuleResources\PLinqInstantFeedbackTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\PrintOptionsTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\PrintTemplatesResources.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\RiaInstantFeedbackTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\RowTemplateTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\SearchPanelTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\SharedResources.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ModuleResources\TreeListViewTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\UnboundColumnsTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\VerticalScrollingOptionsTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\WcfInstantFeedbackTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="ModuleResources\XPOInstantFeedbackTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\BandedView.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\BindingToDynamicObject.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\DataAnnotations.SL.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\FixedBands.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\PrintMasterDetail.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    
+    <Content Include="StandardLibraries.SL.targets" />
+    
+    <Page Include="Modules\BindingToXML.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\CellsSelection.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\ContextMenu.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Descriptions\MultiEditorDescriptions.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\EmbeddedTableView.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\GridSearchPanel.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\GroupSummariesAlignment.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\MasterDetailView.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\MasterDetailWithRIA.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\MultiView.SL.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\DataErrorInfo.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\DragDrop.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\InplaceEditors.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\InplaceLookUpEdit.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\LookUpEdit.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\MultiEditors.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\CollectionView.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\PagedCollectionView.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\MultiSelection.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\NewItemRow.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\PLinqInstantFeedback.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\PrintOptions.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\PrintTemplates.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\RowTemplate.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\SortBySummary.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\TableView.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\TotalSummary.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    
+    <Page Include="Modules\TreeListView.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\UnboundColumns.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\Validation.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\RIAInstantFeedback.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\RIAServices.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\VerticalScrollingOptions.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\WCFInstantFeedback.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\XPOInstantFeedback.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Resource Include="Generic.SL.xaml">
+      
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    
+    <Page Include="Controls\ControlStyles\DemoColumnChooserControl.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ControlStyles\HintControl.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Controls\ControlStyles\InplaceProgressBar.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Controls\ControlStyles\NameTextControl.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Controls\ControlStyles\SummaryComboBox.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\AutoFilterRow.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\ColumnChooser.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    
+    <Page Include="Modules\CurrentDataRow.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\ExpandCollapseGroups.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\FilterControl.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\Filtering.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\FixedColumns.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\Grouping.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\GroupIntervals.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\GroupSummary.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\HitTest.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\LargeDataSet.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\LiveData.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    <Page Include="Modules\MultipleGrouping.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    
+    
+    <Page Include="Modules\Serialization.SL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Resource Include="Themes\Generic.SL.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DXGrid.png" />
+    <Resource Include="Images\FilterControl\add.png" />
+    <Resource Include="Images\FilterControl\delete.png" />
+    <Resource Include="Images\FilterControl\produce.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\LayoutSamples\BriefView.xml" />
+    <EmbeddedResource Include="Data\LayoutSamples\FullView.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GridDemo.sln" />
+    <EmbeddedResource Include="Images\IssueIcons\Active.png" />
+    <EmbeddedResource Include="Images\IssueIcons\Answered.png" />
+    <EmbeddedResource Include="Images\IssueIcons\CustomerClosed.png" />
+    <EmbeddedResource Include="Images\IssueIcons\Duplicate.png" />
+    <EmbeddedResource Include="Images\IssueIcons\InsufficientInformation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ServiceReferenceMetadataStorage Include="Service References\WcfSCService\">
+      <Type>datasvcmap</Type>
+    </ServiceReferenceMetadataStorage>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ItemGroup><Reference Include="DevExpress.Xpf.LayoutControl.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.DeepBlue.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.LightGray.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.Office2007Black.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.Office2007Blue.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.Office2007Silver.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.Seven.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.Office2010Black.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.MetropolisDark.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.TouchlineDark.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.Office2013.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.VS2010.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.DXStyle.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.Office2010Blue.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.Office2010Silver.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.MetropolisLight.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.Office2013LightGray.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.Office2013DarkGray.v14.1"><HintPath></HintPath><Private></Private></Reference><Reference Include="DevExpress.Xpf.Themes.HybridApp.v14.1"><HintPath></HintPath><Private></Private></Reference></ItemGroup>
+  <Import Project="DevExpress.Build.XamlResourceProcessing.targets" />
+  <ItemGroup><Reference Include="System.Data.Services.Client"><Private></Private></Reference><Reference Include="System.Windows.Interactivity"><Private></Private></Reference></ItemGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    
+  </PropertyGroup>
+  <PropertyGroup>
+    
+  </PropertyGroup>
+</Project>

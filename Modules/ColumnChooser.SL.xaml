@@ -1,0 +1,62 @@
+<local:GridDemoModule x:Class="GridDemo.ColumnChooser" mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+    <local:GridDemoModule.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GridDemo;component/Themes/generic.SL.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <local:GridColumnChooserToExpanderVisible x:Key="converterToExpanderVisible" />
+            <dxdb:NWindDataLoader x:Key="NWindDataLoader" />
+        </ResourceDictionary>
+    </local:GridDemoModule.Resources>
+    <dxdb:DemoModuleControl SupressGroupFramePaddingInOptions="False">
+        <dxdb:DemoModuleControl.OptionsContent>
+            <Grid MinWidth="185">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <ToggleButton Name="showHideButton" Grid.Row="0" Height="22" Checked="showHideButton_Toggle" Unchecked="showHideButton_Toggle" IsChecked="{Binding Path=GridControl.View.IsColumnChooserVisible, Mode=TwoWay}" />
+                <dx:GroupFrame Grid.Row="1" Header="Select Column Chooser" Margin="0,12,0,0">
+                    <dxe:ListBoxEdit x:Name="columnChooserTypesListBox" ShowBorder="False" SelectedItem="{Binding Path=ColumnChooserType, Mode=TwoWay}" Background="{x:Null}">
+                        <dxe:ListBoxEdit.StyleSettings>
+                            <dxe:RadioListBoxEditStyleSettings />
+                        </dxe:ListBoxEdit.StyleSettings>
+                        <dxe:ListBoxEdit.Items>
+                            <local:ColumnChooserType>Default</local:ColumnChooserType>
+                            <local:ColumnChooserType>Custom</local:ColumnChooserType>
+                        </dxe:ListBoxEdit.Items>
+                    </dxe:ListBoxEdit>
+                </dx:GroupFrame>
+
+                <dxdb:DemoExpander Grid.Row="2" x:Name="customColumnChooserExpander" Expanded="customColumnChooserExpander_Expanded" Collapsed="customColumnChooserExpander_Collapsed" Margin="0,12,0,0" Visibility="{Binding Path=SelectedItem, ElementName=columnChooserTypesListBox, Converter={StaticResource converterToExpanderVisible}}" IsExpanded="{Binding Path=IsChecked, ElementName=showHideButton, Mode=TwoWay}">
+
+                        <Border Grid.Row="2" Background="White" CornerRadius="0" BorderBrush="Gray" BorderThickness="1">
+                            <local:DemoColumnChooserControl View="{Binding GridControl.View}" x:Name="columnChooser" />
+                        </Border>
+
+                </dxdb:DemoExpander>
+
+            </Grid>
+        </dxdb:DemoModuleControl.OptionsContent>
+        <dxg:GridControl Name="grid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Customers, Source={StaticResource NWindDataLoader}}">
+            <dxg:GridControl.View>
+                <dxg:TableView NavigationStyle="Row" x:Name="gridView" AutoWidth="True" AllowPerPixelScrolling="True" />
+            </dxg:GridControl.View>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="CompanyName" Width="230" />
+                <dxg:GridColumn FieldName="ContactName" Width="150" />
+                <dxg:GridColumn FieldName="ContactTitle" Width="150" />
+                <dxg:GridColumn FieldName="CustomerID" Width="70" Header="ID" />
+                <dxg:GridColumn FieldName="Region" Width="100" Visible="False" />
+                <dxg:GridColumn FieldName="Country" Width="90" Visible="False" />
+                <dxg:GridColumn FieldName="City" Width="100" Visible="False" />
+                <dxg:GridColumn FieldName="Address" Width="260" Visible="False" />
+                <dxg:GridColumn FieldName="PostalCode" Width="110" Visible="False" />
+                <dxg:GridColumn FieldName="Fax" Width="110" Visible="False" />
+                <dxg:GridColumn FieldName="Phone" Width="100" Visible="False" />
+            </dxg:GridControl.Columns>
+        </dxg:GridControl>
+
+    </dxdb:DemoModuleControl>
+</local:GridDemoModule>

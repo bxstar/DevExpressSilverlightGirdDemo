@@ -1,0 +1,82 @@
+<local:GridDemoModule x:Class="GridDemo.PLinqInstantFeedback" mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm">
+
+    <local:GridDemoModule.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GridDemo;component/Themes/generic.SL.xaml" />
+                <ResourceDictionary Source="/GridDemo;component/ModuleResources/PLinqInstantFeedbackTemplates.SL.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <local:PLinqInstantFeedbackDemoViewModel x:Key="PLinqInstantFeedbackDemoViewModel">
+                <local:PLinqInstantFeedbackDemoViewModel.CountItems>
+                    <local:CountItemCollection>
+                        <local:CountItem Count="100000" DisplayName="Small" />
+                        <local:CountItem Count="1000000" DisplayName="Medium" />
+                        <local:CountItem Count="3000000" DisplayName="Large" />
+                    </local:CountItemCollection>
+                </local:PLinqInstantFeedbackDemoViewModel.CountItems>
+            </local:PLinqInstantFeedbackDemoViewModel>
+        </ResourceDictionary>
+    </local:GridDemoModule.Resources>
+    <dxdb:DemoModuleControl>
+        <dxdb:DemoModuleControl.OptionsTopText>
+            Specify the number or Rows you’d like to view within the DXGrid.
+        </dxdb:DemoModuleControl.OptionsTopText>
+        <dxdb:DemoModuleControl.OptionsContent>
+            <StackPanel>
+                <dx:GroupFrame Header="Rows">
+                    <dxe:ListBoxEdit SelectedIndex="1" ItemTemplate="{StaticResource CountItemTemplate}" ShowBorder="False" Background="{x:Null}" ItemsSource="{Binding Path=DataContext.CountItems}" SelectedItem="{Binding Path=DataContext.SelectedCountItem, Mode=TwoWay}">
+                        <dxe:ListBoxEdit.StyleSettings>
+                            <dxe:RadioListBoxEditStyleSettings />
+                        </dxe:ListBoxEdit.StyleSettings>
+                    </dxe:ListBoxEdit>
+                </dx:GroupFrame>
+
+                <dx:LinqToObjectsInstantFeedbackDataSource Name="pLinqInstantSource" ListSource="{Binding Path=DataContext.ListSource}" />
+
+            </StackPanel>
+        </dxdb:DemoModuleControl.OptionsContent>
+        <Grid DataContext="{StaticResource PLinqInstantFeedbackDemoViewModel}">
+            <dxg:GridControl Name="grid" ItemsSource="{Binding ElementName=pLinqInstantSource, Path=Data}" DesignTimeDataObjectType="local:OrderData">
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn x:Name="colOrderId" FieldName="OrderId" Header="ID" Width="60" MinWidth="60" FixedWidth="True" AllowResizing="False" AllowGrouping="False" AllowColumnFiltering="False" />
+                    <dxg:GridColumn x:Name="colCustomerName" FieldName="CustomerName" Width="180" />
+
+
+                    <dxg:GridColumn x:Name="colOrderDate" FieldName="OrderDate" Width="80" AllowGrouping="False">
+
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:DateEditSettings DisplayFormat="d" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn x:Name="colProductCategory" FieldName="ProductCategory" Width="100" CellTemplate="{StaticResource categoryCellTemplate}">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:ComboBoxEditSettings ItemsSource="{Binding Path=Categories}" ItemTemplate="{StaticResource categoryTemplate}" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn x:Name="colProductName" FieldName="ProductName" Width="180" />
+                    <dxg:GridColumn x:Name="colQuantity" FieldName="Quantity" Width="60" />
+                    <dxg:GridColumn x:Name="colPrice" FieldName="Price" Width="60">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings DisplayFormat="c" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn x:Name="colIsReady" FieldName="IsReady" Width="60" HorizontalHeaderContentAlignment="Center">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:CheckEditSettings />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                </dxg:GridControl.Columns>
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="view" ShowTotalSummary="True" ShowAutoFilterRow="True" AutoWidth="True" RowAnimationKind="None" WaitIndicatorType="{Binding Path=IsGeneratingOrderData, Converter={StaticResource GeneratingDataToWaitIndicatorTypeConverter}}" />
+                </dxg:GridControl.View>
+                <dxg:GridControl.TotalSummary>
+                    <dxg:GridSummaryItem FieldName="CustomerName" SummaryType="Count" />
+                </dxg:GridControl.TotalSummary>
+            </dxg:GridControl>
+            <dx:BackgroundPanel Template="{StaticResource WaitIndicatorWithProgressTemplate}" Visibility="{Binding Path=IsGeneratingOrderData, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
+        <dxmvvm:Interaction.Triggers>
+            <dxmvvm:EventToCommand EventName="BeforeModuleDisappear" Command="{Binding ElementName=pLinqInstantSource, Path=DisposeCommand}" />
+        </dxmvvm:Interaction.Triggers>
+    </dxdb:DemoModuleControl>
+</local:GridDemoModule>

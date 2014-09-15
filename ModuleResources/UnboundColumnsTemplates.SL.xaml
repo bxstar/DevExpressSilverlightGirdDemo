@@ -1,0 +1,41 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:local="clr-namespace:GridDemo">
+
+    <dxg:RowPropertyValueConverter x:Key="RowPropertyValueConverter" />
+
+    <DataTemplate x:Key="totalCellTemplate1">
+        <Border Background="#FFF9E9FF" Margin="0,0,-1,0" Padding="2, 2, 2, 1" IsHitTestVisible="True">
+            <dx:DXDockPanel>
+                <Path Name="arrow" dx:DXDockPanel.Dock="Left" Margin="0" Stretch="Fill" Fill="#FF000000" Data="F1 M 3.35616,0.740234L 3.35616,-7.40686L -3.35616,-7.40686L -3.35616,0.740234L -6.66667,0.740234L -1.65186e-006,7.40674L 6.66667,0.740234L 3.35616,0.740234 Z" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Center" Width="13" Height="15">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="scale" CenterX="6" CenterY="0" ScaleX="{Binding Path=Data, Converter={StaticResource RowPropertyValueConverter}, ConverterParameter=TotalScale}" ScaleY="{Binding Path=Data, Converter={StaticResource RowPropertyValueConverter}, ConverterParameter=TotalScale}" />
+                            <RotateTransform Angle="-180" />
+                            <TranslateTransform x:Name="ArrowDownTransform" X="1" Y="0" />
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <TextBlock VerticalAlignment="Center" Foreground="Black" IsHitTestVisible="True" HorizontalAlignment="Right">
+      <TextBlock.Text>
+       <Binding Path="Value" StringFormat="$0.00" />
+      </TextBlock.Text>
+                </TextBlock>
+                <dx:DXDockPanel.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                        <BeginStoryboard>
+                            <BeginStoryboard.Storyboard>
+                                <Storyboard>
+                                    <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="ArrowDownTransform" Storyboard.TargetProperty="Y" RepeatBehavior="Forever">
+                                        <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
+                                        <SplineDoubleKeyFrame KeyTime="00:00:00.5000000" Value="-1.5" />
+                                        <SplineDoubleKeyFrame KeyTime="00:00:01" Value="0" />
+                                    </DoubleAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard.Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </dx:DXDockPanel.Triggers>
+            </dx:DXDockPanel>
+        </Border>
+    </DataTemplate>
+    <local:TotalCellTemplateSelector x:Key="totalCellTemplateSelector" TotalCellTemplate="{StaticResource totalCellTemplate1}" />
+</ResourceDictionary>

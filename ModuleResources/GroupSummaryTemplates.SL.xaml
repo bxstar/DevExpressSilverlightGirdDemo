@@ -1,0 +1,38 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:local="clr-namespace:GridDemo">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/GridDemo;component/Themes/generic.SL.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <local:DemoDataProvider x:Key="DemoDataProvider" />
+    <dx:FormatStringConverter x:Key="FormatStringConverter" FormatString="0.##" />
+    <dx:BoolToVisibilityInverseConverter x:Key="BoolToVisibilityInverseConverter" />
+    <dx:BoolToObjectConverter x:Key="BoolToGroupSummaryDisplayModeConverter" TrueValue="AlignByColumns" FalseValue="Default" />
+
+    <DataTemplate x:Key="customTemplateWithSummaryCustomization">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
+
+            <dxe:ComboBoxEdit Style="{StaticResource GroupSummaryComboBoxEdit}" ItemsSource="{Binding SummaryItemTypes, Source={StaticResource DemoDataProvider}}" EditValue="{Binding Path=SummaryItem.SummaryType, Mode=TwoWay}" ToolTipService.ToolTip="Select summary type" />
+            <TextBlock VerticalAlignment="Center" Text="(" />
+            <dxe:ComboBoxEdit Style="{StaticResource GroupSummaryComboBoxEdit}" ItemsSource="{Binding SummaryFieldNames, Source={StaticResource DemoDataProvider}}" EditValue="{Binding Path=SummaryItem.FieldName, Mode=TwoWay}" ToolTipService.ToolTip="Select summary column" />
+            <TextBlock VerticalAlignment="Center" Text=")=" />
+            <TextBlock VerticalAlignment="Center" Text="{Binding SummaryValue, Converter={StaticResource FormatStringConverter}}" />
+
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="customTemplate">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
+            <TextBlock VerticalAlignment="Center" Text="{Binding SummaryItem.SummaryType}" />
+            <TextBlock VerticalAlignment="Center" Text="(" />
+            <TextBlock VerticalAlignment="Center" Text="{Binding Column.HeaderCaption}" />
+            <TextBlock VerticalAlignment="Center" Text=")=" />
+            <TextBlock VerticalAlignment="Center" Text="{Binding SummaryValue, Converter={StaticResource FormatStringConverter}}" />
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="smallValueTemplate">
+        <ContentControl Content="{Binding}" ContentTemplate="{Binding View.DefaultGroupSummaryItemTemplate}" Foreground="#FF238F06" />
+    </DataTemplate>
+    <DataTemplate x:Key="largeValueTemplate">
+        <ContentControl Content="{Binding}" ContentTemplate="{Binding View.DefaultGroupSummaryItemTemplate}" Foreground="#FFBB4646" />
+    </DataTemplate>
+</ResourceDictionary>

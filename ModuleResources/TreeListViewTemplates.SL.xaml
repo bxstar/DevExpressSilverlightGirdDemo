@@ -1,0 +1,11 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:local="clr-namespace:GridDemo">
+
+    <local:ShowTreeListLinesConverter x:Key="showTreeLinesConverter" />
+    <local:NavigationStyleToIsEnabledConverter x:Key="navigationStyleToIsEnabledConverter" />
+    <dxe:BytesToImageSourceConverter x:Key="imageConverter" />
+    <dx:BoolToObjectConverter x:Key="ShowColumnChooserButtonContentConverter" TrueValue="Hide Column Chooser" FalseValue="Show Column Chooser" />
+
+    <DataTemplate x:Key="photoTemplate">
+        <Image Stretch="UniformToFill" Height="74" Width="60" Source="{Binding Path=Value, Converter={StaticResource imageConverter}}" />
+    </DataTemplate>
+</ResourceDictionary>

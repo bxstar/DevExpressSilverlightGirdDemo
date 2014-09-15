@@ -1,0 +1,83 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib" xmlns:local="clr-namespace:GridDemo">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/GridDemo;component/Themes/generic.SL.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate x:Key="newRowStoryboard">
+        <local:StoryboardContainer>
+            <Storyboard>
+                <DoubleAnimationUsingKeyFrames>
+                    <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                    <SplineDoubleKeyFrame KeyTime="0:0:1" Value="1" KeySpline="0,0,0,1" />
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </local:StoryboardContainer>
+    </ControlTemplate>
+    <ControlTemplate x:Key="deleteRowStoryboard">
+        <local:StoryboardContainer>
+            <Storyboard>
+                <DoubleAnimationUsingKeyFrames>
+                    <SplineDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                    <SplineDoubleKeyFrame KeyTime="0:0:1" Value="0" KeySpline="0,0,1,0.25" />
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </local:StoryboardContainer>
+    </ControlTemplate>
+    <ControlTemplate x:Key="memoryUsageIncreasedColorStoryboard">
+        <local:StoryboardContainer>
+            <Storyboard>
+                <ColorAnimationUsingKeyFrames BeginTime="00:00:00">
+                    <SplineColorKeyFrame KeyTime="00:00:00" Value="#FF92969C" />
+                    <SplineColorKeyFrame KeyTime="00:00:00.25" Value="#FFB83152" KeySpline="0,0,0.799,0.109" />
+                    <SplineColorKeyFrame KeySpline="0.414,0.899,1,1" KeyTime="00:00:02" Value="#FF92969C" />
+                </ColorAnimationUsingKeyFrames>
+            </Storyboard>
+        </local:StoryboardContainer>
+    </ControlTemplate>
+    <ControlTemplate x:Key="memoryUsageDecreasedColorStoryboard">
+        <local:StoryboardContainer>
+            <Storyboard>
+                <ColorAnimationUsingKeyFrames BeginTime="00:00:00">
+                    <SplineColorKeyFrame KeyTime="00:00:00" Value="#FF92969C" />
+                    <SplineColorKeyFrame KeyTime="00:00:00.25" Value="#FF669331" KeySpline="0,0,0.799,0.109" />
+                    <SplineColorKeyFrame KeySpline="0.414,0.899,1,1" KeyTime="00:00:02" Value="#FF92969C" />
+                </ColorAnimationUsingKeyFrames>
+            </Storyboard>
+        </local:StoryboardContainer>
+    </ControlTemplate>
+    <ControlTemplate x:Key="cpuUsageChangeStoryboard">
+        <local:StoryboardContainer>
+            <Storyboard>
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00" />
+                    <SplineDoubleKeyFrame KeySpline="0.414,0.899,1,1" KeyTime="00:00:01" />
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </local:StoryboardContainer>
+    </ControlTemplate>
+    <dxg:RowPropertyValueConverter x:Key="RowPropertyValueConverter" />
+    <DataTemplate x:Key="rowTemplate">
+        <Border Name="border">
+            <Border.Background>
+                <SolidColorBrush Color="Transparent" />
+            </Border.Background>
+            <dx:DXExpander Name="reveal" Tag="{Binding Path=DataContext, Converter={StaticResource RowPropertyValueConverter}, ConverterParameter=AnimationElement}" AnimationProgress="{Binding Path=Tag.RevealProgress, RelativeSource={RelativeSource Self}}" HorizontalExpand="None" VerticalExpand="FromBottomToTop">
+                <ContentPresenter Name="content" Content="{Binding}" ContentTemplate="{Binding View.DefaultDataRowTemplate}" />
+            </dx:DXExpander>
+        </Border>
+    </DataTemplate>
+    <dx:FormatStringConverter x:Key="memoryUsageConverter" FormatString="0 K" />
+    <DataTemplate x:Key="progressTemplate">
+        <ProgressBar Margin="2,1,2,1" Minimum="0" Maximum="100" DataContext="{Binding Path=Data, Converter={StaticResource RowPropertyValueConverter}, ConverterParameter=AnimationElement}" Value="{Binding Path=CpuUsage}" Template="{StaticResource InplaceProgressBarTemplate}" />
+    </DataTemplate>
+    <DataTemplate x:Key="memUsageTemplate">
+        <Border DataContext="{Binding Path=Data, Converter={StaticResource RowPropertyValueConverter}, ConverterParameter=AnimationElement}" CornerRadius="3,3,3,3" x:Name="progress6" Margin="2,1,2,1" HorizontalAlignment="Center">
+            <Border.Background>
+                <SolidColorBrush Color="{Binding Path=MemoryUsageColor}" />
+            </Border.Background>
+            <TextBlock Width="Auto" FontSize="14" Text="{Binding DataContext.Value, Converter={StaticResource memoryUsageConverter}, RelativeSource={RelativeSource TemplatedParent}}" TextAlignment="Center" HorizontalAlignment="Center" Margin="10,0,10,0" VerticalAlignment="Center" Height="Auto" Foreground="#FFFFFFFF" />
+        </Border>
+    </DataTemplate>
+
+</ResourceDictionary>

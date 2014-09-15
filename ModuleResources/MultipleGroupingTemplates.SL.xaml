@@ -1,0 +1,79 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys" xmlns:dxcon="clr-namespace:DevExpress.Xpf.Editors.Controls;assembly=DevExpress.Xpf.Core.v14.1" xmlns:local="clr-namespace:GridDemo">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/GridDemo;component/Themes/generic.SL.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate x:Key="displayTemplate">
+
+                <TextBlock x:Name="PART_Editor">
+                    <TextBlock.Style>
+                        <Binding Path="Value">
+                            <Binding.Source>
+                                <local:StyleFinder Key="TextEditThemeKey_TextBlockInplaceStyle" />
+                            </Binding.Source>
+                        </Binding>
+                    </TextBlock.Style>
+                    <TextBlock.FontWeight>
+                        <Binding Path="DataContext.RowData.Row.PercentComplete" RelativeSource="{RelativeSource TemplatedParent}">
+                            <Binding.Converter>
+                                <local:PercentCompleteToFontWeightConverter />
+                            </Binding.Converter>
+                        </Binding>
+                    </TextBlock.FontWeight>
+                    <TextBlock.Opacity>
+                        <Binding Path="DataContext.RowData.Row.Complete" RelativeSource="{RelativeSource TemplatedParent}">
+                            <Binding.Converter>
+                                <dx:BoolToObjectConverter FalseValue="1" TrueValue="0.35" />
+                            </Binding.Converter>
+                        </Binding>
+                    </TextBlock.Opacity>
+                    <TextBlock.FontStyle>
+                        <Binding Path="DataContext.RowData.Row.Complete" RelativeSource="{RelativeSource TemplatedParent}">
+                            <Binding.Converter>
+                                <dx:BoolToObjectConverter FalseValue="Normal" TrueValue="Italic" />
+                            </Binding.Converter>
+                        </Binding>
+                    </TextBlock.FontStyle>
+        </TextBlock>
+    </ControlTemplate>
+    <ControlTemplate x:Key="editTemplate">
+
+            <dxcon:SLTextBox x:Name="PART_Editor" VerticalAlignment="Stretch">
+                    <dxcon:SLTextBox.Style>
+                        <Binding Path="Value">
+                            <Binding.Source>
+                                <local:StyleFinder Key="TextEditThemeKey_TextInplaceStyle" />
+                            </Binding.Source>
+                        </Binding>
+                    </dxcon:SLTextBox.Style>
+
+            <dxcon:SLTextBox.FontWeight>
+
+                    <Binding Path="DataContext.RowData.Row.PercentComplete">
+                    <Binding.Converter>
+                        <local:PercentCompleteToFontWeightConverter />
+                    </Binding.Converter>
+                </Binding>
+            </dxcon:SLTextBox.FontWeight>
+            <dxcon:SLTextBox.Opacity>
+
+                    <Binding Path="DataContext.RowData.Row.Complete">
+                    <Binding.Converter>
+                        <dx:BoolToObjectConverter FalseValue="1" TrueValue="0.35" />
+                    </Binding.Converter>
+                </Binding>
+            </dxcon:SLTextBox.Opacity>
+            <dxcon:SLTextBox.FontStyle>
+
+                    <Binding Path="DataContext.RowData.Row.Complete">
+                    <Binding.Converter>
+                        <dx:BoolToObjectConverter FalseValue="Normal" TrueValue="Italic" />
+                    </Binding.Converter>
+                </Binding>
+            </dxcon:SLTextBox.FontStyle>
+
+
+        </dxcon:SLTextBox>
+    </ControlTemplate>
+</ResourceDictionary>

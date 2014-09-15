@@ -1,0 +1,87 @@
+<local:GridDemoModule x:Class="GridDemo.XPOInstantFeedback" mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800" UseGridControlWrapperAsDataContext="True" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+    <local:GridDemoModule.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GridDemo;component/Themes/generic.SL.xaml" />
+                <ResourceDictionary Source="/GridDemo;component/ModuleResources/XPOInstantFeedbackTemplates.SL.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </local:GridDemoModule.Resources>
+    <dxdb:DemoModuleControl SupressGroupFramePaddingInOptions="False">
+        <dxdb:DemoModuleControl.OptionsContent>
+            <StackPanel MinWidth="165" MaxWidth="230">
+                <local:InternetConnectionControl />
+                <dx:GroupFrame Header="Filter Criteria" Margin="0,0,0,12">
+                    <dxe:ComboBoxEdit x:Name="filter" DisplayMember="DisplayValue" ValueMember="EditValue" IsTextEditable="False" EditValue="{Binding GridControl.FilterString, Mode=TwoWay}" ShowNullTextForEmptyValue="False">
+                        <dxg:CustomComboBoxItem DisplayValue="All" EditValue="" />
+                        <dxg:CustomComboBoxItem DisplayValue=".NET" EditValue="[TechnologyName] = '.NET'" />
+                        <dxg:CustomComboBoxItem DisplayValue="Urgent" EditValue="[Urgent] = True" />
+                    </dxe:ComboBoxEdit>
+                </dx:GroupFrame>
+                <dx:GroupFrame Header="Wait Indicator Type" Margin="0,0,0,12">
+                    <dxe:ListBoxEdit Background="{x:Null}" ShowBorder="False" Margin="0,0,30,0" SelectedItem="{Binding GridControl.View.WaitIndicatorType, Mode=OneTime}" x:Name="waitIndicatorList">
+                        <dxe:ListBoxEdit.StyleSettings>
+                            <dxe:RadioListBoxEditStyleSettings />
+                        </dxe:ListBoxEdit.StyleSettings>
+                        <dxe:ListBoxEdit.Items>
+                            <dxg:WaitIndicatorType>Default</dxg:WaitIndicatorType>
+                            <dxg:WaitIndicatorType>Panel</dxg:WaitIndicatorType>
+                            <dxg:WaitIndicatorType>None</dxg:WaitIndicatorType>
+                            <sys:String>Custom</sys:String>
+                        </dxe:ListBoxEdit.Items>
+                    </dxe:ListBoxEdit>
+                </dx:GroupFrame>
+
+                <dx:GroupFrame Header="Animation Style" Margin="0,0,0,0">
+                    <StackPanel Orientation="Vertical">
+                        <dxe:ListBoxEdit x:Name="animationStyle" Background="{x:Null}" ShowBorder="False" Margin="0,0,30,12" SelectedItem="{Binding GridControl.View.RowAnimationKind, Mode=TwoWay}">
+                            <dxe:ListBoxEdit.StyleSettings>
+                                <dxe:RadioListBoxEditStyleSettings />
+                            </dxe:ListBoxEdit.StyleSettings>
+                            <dxe:ListBoxEdit.Items>
+                                <dxg:RowAnimationKind>None</dxg:RowAnimationKind>
+                                <dxg:RowAnimationKind>Opacity</dxg:RowAnimationKind>
+                            </dxe:ListBoxEdit.Items>
+                        </dxe:ListBoxEdit>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel.Visibility>
+                                <Binding Path="GridControl.View.RowAnimationKind">
+                                    <Binding.Converter>
+                                        <dx:EnumToObjectConverter DefaultValue="Collapsed">
+                                            <dx:EnumToObjectConverter.Values>
+                                                <dx:EnumObjectProvider x:Key="Opacity" Value="Visible" />
+                                            </dx:EnumToObjectConverter.Values>
+                                        </dx:EnumToObjectConverter>
+                                    </Binding.Converter>
+                                </Binding>
+                            </StackPanel.Visibility>
+                            <dxdb:SliderControl Header="Animation Duration" UOM="(ms)" Margin="0,0,0,0" EditValue="{Binding Path=GridControl.View.RowOpacityAnimationDuration, Converter={StaticResource DurationToDoubleConverter}, Mode=TwoWay}" Minimum="100" Maximum="3000" SmallStep="50" LargeStep="100" />
+                        </StackPanel>
+                    </StackPanel>
+                </dx:GroupFrame>
+
+            </StackPanel>
+        </dxdb:DemoModuleControl.OptionsContent>
+        <dxg:GridControl Name="grid" SelectionMode="Row">
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn x:Name="colId" FieldName="Id" Width="70" FixedWidth="True" AllowGrouping="False" AllowColumnFiltering="False" AllowResizing="False" CellTemplate="{StaticResource idTemplate}" />
+                <dxg:GridColumn x:Name="colSubject" FieldName="Subject" Width="300" AllowGrouping="False" />
+                <dxg:GridColumn x:Name="colStatus" FieldName="Status" FixedWidth="True" Width="70" AllowResizing="False" CellTemplate="{StaticResource statusTemplate}" />
+                <dxg:GridColumn x:Name="colCreatedOn" FieldName="CreatedOn" GroupInterval="DateYear" AllowResizing="False" Width="100" FixedWidth="True" />
+                <dxg:GridColumn x:Name="colHoursActive" FieldName="HoursActive" Header="HA" FixedWidth="True" Width="55" AllowResizing="False" HeaderToolTip="Hours Active" AllowGrouping="False" AllowUnboundExpressionEditor="True" UnboundType="Integer" UnboundExpression="DateDiffHour([CreatedOn], [ModifiedOn])" />
+                <dxg:GridColumn x:Name="colProductName" FieldName="ProductName" Header="Product" GroupIndex="1" />
+                <dxg:GridColumn x:Name="colTechnologyName" FieldName="TechnologyName" Header="Technology" GroupIndex="0" />
+                <dxg:GridColumn x:Name="colUrgent" FieldName="Urgent" FixedWidth="True" Width="70" AllowResizing="False" />
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.GroupSummary>
+                <dxg:GridSummaryItem FieldName="ProductName" SummaryType="Count" />
+            </dxg:GridControl.GroupSummary>
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem FieldName="Subject" SummaryType="Count" Alignment="Right" />
+            </dxg:GridControl.TotalSummary>
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="view" ShowFixedTotalSummary="True" WaitIndicatorType="Panel" ShowAutoFilterRow="True" AutoWidth="True" NavigationStyle="Row" AllowEditing="False" />
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </dxdb:DemoModuleControl>
+</local:GridDemoModule>

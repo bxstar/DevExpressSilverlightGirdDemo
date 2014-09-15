@@ -1,0 +1,154 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:GridDemo" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/GridDemo;component/ModuleResources/SharedResources.SL.xaml" />
+        <ResourceDictionary Source="/GridDemo;component/ModuleResources/MultiViewTemplates.SL.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <DataTemplate DataType="local:MultiViewTableViewViewModel">
+        <dxg:GridControl AutoExpandAllGroups="True" ItemsSource="{Binding Employees}" AllowColumnMRUFilterList="False">
+            <dxg:GridControl.DetailDescriptor>
+                <dxg:DataControlDetailDescriptor ItemsSourceBinding="{Binding Converter={StaticResource employeeToOrdersConverter}}" ShowHeader="True" HeaderContentTemplate="{StaticResource ordersDetailHeaderTemplate}">
+                    <dxg:GridControl>
+                        <dxg:GridControl.Columns>
+                            <dxg:GridColumn FieldName="OrderDate" />
+                            <dxg:GridColumn FieldName="Freight" />
+                            <dxg:GridColumn FieldName="ShipName" />
+                            <dxg:GridColumn FieldName="ShipCountry" CellTemplate="{StaticResource colCountryCellTemplate}" />
+                            <dxg:GridColumn FieldName="ShipCity" />
+                            <dxg:GridColumn FieldName="ShipAddress" />
+                        </dxg:GridControl.Columns>
+                        <dxg:GridControl.View>
+                            <dxg:TableView AutoWidth="True" ShowGroupPanel="False" ShowFixedTotalSummary="True" DetailHeaderContent="Orders" />
+                        </dxg:GridControl.View>
+                        <dxg:GridControl.TotalSummary>
+                            <dxg:GridSummaryItem SummaryType="Count" Alignment="Left" />
+                            <dxg:GridSummaryItem SummaryType="Sum" Alignment="Right" FieldName="Freight" />
+                        </dxg:GridControl.TotalSummary>
+                    </dxg:GridControl>
+                </dxg:DataControlDetailDescriptor>
+            </dxg:GridControl.DetailDescriptor>
+            <dxg:GridControl.GroupSummary>
+                <dxg:GridSummaryItem FieldName="BirthDate" SummaryType="Min" />
+            </dxg:GridControl.GroupSummary>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="FullName" UnboundType="String" UnboundExpression="[FirstName] + ' ' + [LastName]" ReadOnly="True" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" />
+                <dxg:GridColumn FieldName="BirthDate" Width="80" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" CellTemplate="{StaticResource colBirthDateCellTemplate}">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:DateEditSettings DisplayFormat="d" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="JobTitle" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" />
+                <dxg:GridColumn FieldName="CountryRegionName" Header="Country" Width="130" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" CellTemplate="{StaticResource colCountryCellTemplate}" />
+                <dxg:GridColumn FieldName="Age" Width="80" UnboundType="Integer" Visible="False" ShowInColumnChooser="False" UnboundExpression="DateDiffYear([BirthDate], Today())" AllowColumnFiltering="False" />
+                <dxg:GridColumn FieldName="{Binding Path=ColumnInfoFieldName}" AllowSorting="False" AllowColumnFiltering="False" HeaderTemplate="{StaticResource colInfoHeaderTemplate}" />
+                <dxg:GridColumn Width="35" GroupIndex="0" FieldName="GroupName" SortMode="Value" AllowEditing="False" GroupValueTemplate="{StaticResource colGroupNameGroupValueTemplate}" CellTemplate="{StaticResource colGroupNameCellTemplate}" />
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem SummaryType="Count" Alignment="Right" />
+            </dxg:GridControl.TotalSummary>
+            <dxg:GridControl.View>
+                <dxg:TableView AutoWidth="True" ShowFixedTotalSummary="True" AllowPerPixelScrolling="True" DetailHeaderContent="Employees" Name="tableView">
+                    <dxmvvm:Interaction.Triggers>
+                      <dxmvvm:EventToCommand EventName="Loaded" CommandParameter="1" ProcessEventsFromDisabledEventOwner="true" AllowChangingEventOwnerIsEnabled="true" Command="{Binding Commands.ExpandMasterRow, ElementName=tableView}" />
+                    </dxmvvm:Interaction.Triggers>
+                </dxg:TableView>
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </DataTemplate>
+    <DataTemplate DataType="local:MultiViewTreeListViewViewModel">
+        <dxg:GridControl ItemsSource="{Binding Employees}" AllowColumnMRUFilterList="False">
+            <dxg:GridControl.GroupSummary>
+                <dxg:GridSummaryItem FieldName="BirthDate" SummaryType="Min" />
+            </dxg:GridControl.GroupSummary>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="FullName" UnboundType="String" UnboundExpression="[FirstName] + ' ' + [LastName]" ReadOnly="True" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" />
+                <dxg:GridColumn FieldName="BirthDate" Width="80" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" CellTemplate="{StaticResource colBirthDateCellTemplate}">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:DateEditSettings DisplayFormat="d" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="JobTitle" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" />
+                <dxg:GridColumn FieldName="CountryRegionName" Header="Country" Width="130" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" CellTemplate="{StaticResource colCountryCellTemplate}" />
+                <dxg:GridColumn FieldName="Age" Width="80" UnboundType="Integer" Visible="False" ShowInColumnChooser="False" UnboundExpression="DateDiffYear([BirthDate], Today())" AllowColumnFiltering="False" />
+                <dxg:GridColumn FieldName="{Binding Path=ColumnInfoFieldName}" AllowSorting="False" AllowColumnFiltering="False" HeaderTemplate="{StaticResource colInfoHeaderTemplate}" />
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem SummaryType="Count" Alignment="Right" />
+            </dxg:GridControl.TotalSummary>
+            <dxg:GridControl.View>
+                <dxg:TreeListView KeyFieldName="Id" ShowFixedTotalSummary="True" ShowSearchPanelMode="Never" ParentFieldName="ParentId" AutoWidth="True" AllowPerPixelScrolling="True" NodeImageSelector="{StaticResource imageSelector}" ShowNodeImages="True" AutoExpandAllNodes="True" />
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </DataTemplate>
+
+    <DataTemplate DataType="local:MultiViewBandedTableViewViewModel">
+        <dxg:GridControl AutoExpandAllGroups="True" ItemsSource="{Binding Employees}" AllowColumnMRUFilterList="False">
+            <dxg:GridControl.Bands>
+                <dxg:GridControlBand Header="Person">
+                    <dxg:GridColumn FieldName="FullName" UnboundType="String" UnboundExpression="[FirstName] + ' ' + [LastName]" ReadOnly="True" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" />
+                    <dxg:GridColumn FieldName="BirthDate" Width="80" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" CellTemplate="{StaticResource colBirthDateCellTemplate}">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:DateEditSettings DisplayFormat="d" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn FieldName="Age" Width="80" UnboundType="Integer" Visible="False" ShowInColumnChooser="False" UnboundExpression="DateDiffYear([BirthDate], Today())" AllowColumnFiltering="False" />
+                    <dxg:GridColumn FieldName="JobTitle" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" dxg:BandBase.GridRow="1" />
+                    <dxg:GridColumn FieldName="GroupName" Width="35" GroupIndex="0" SortMode="Value" AllowEditing="False" GroupValueTemplate="{StaticResource colGroupNameGroupValueTemplate}" CellTemplate="{StaticResource colGroupNameCellTemplate}" />
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="Contact Info">
+                    <dxg:GridColumn FieldName="CountryRegionName" Header="Country" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" CellTemplate="{StaticResource colCountryCellTemplate}" />
+                    <dxg:GridColumn FieldName="City" />
+                    <dxg:GridColumn FieldName="PostalCode" dxg:BandBase.GridRow="1" />
+                    <dxg:GridColumn FieldName="AddressLine1" Header="Address" dxg:BandBase.GridRow="1" />
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="Picture">
+                    <dxg:GridColumn FieldName="ImageData" Header="Photo" AllowEditing="False" CellTemplate="{StaticResource ImageDataCellTemplate}" />
+                </dxg:GridControlBand>
+            </dxg:GridControl.Bands>
+            <dxg:GridControl.GroupSummary>
+                <dxg:GridSummaryItem FieldName="BirthDate" SummaryType="Min" />
+            </dxg:GridControl.GroupSummary>
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem SummaryType="Count" Alignment="Right" />
+            </dxg:GridControl.TotalSummary>
+            <dxg:GridControl.View>
+                <dxg:TableView AutoWidth="True" ShowFixedTotalSummary="True" AllowPerPixelScrolling="True" DetailHeaderContent="Employees" />
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </DataTemplate>
+    <DataTemplate DataType="local:MultiViewBandedTreeListViewViewModel">
+        <dxg:GridControl ItemsSource="{Binding Employees}" AllowColumnMRUFilterList="False">
+            <dxg:GridControl.Bands>
+                <dxg:GridControlBand Header="Person">
+                    <dxg:GridColumn FieldName="FullName" UnboundType="String" UnboundExpression="[FirstName] + ' ' + [LastName]" ReadOnly="True" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" />
+                    <dxg:GridColumn FieldName="BirthDate" Width="80" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" CellTemplate="{StaticResource colBirthDateCellTemplate}">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:DateEditSettings DisplayFormat="d" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn FieldName="Age" Width="80" UnboundType="Integer" Visible="False" ShowInColumnChooser="False" UnboundExpression="DateDiffYear([BirthDate], Today())" AllowColumnFiltering="False" />
+                    <dxg:GridColumn FieldName="JobTitle" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" dxg:BandBase.GridRow="1" />
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="Contact Info">
+                    <dxg:GridColumn FieldName="CountryRegionName" Header="Country" HeaderTemplate="{StaticResource ColumnHeaderTemplate}" CellTemplate="{StaticResource colCountryCellTemplate}" />
+                    <dxg:GridColumn FieldName="City" />
+                    <dxg:GridColumn FieldName="PostalCode" dxg:BandBase.GridRow="1" />
+                    <dxg:GridColumn FieldName="AddressLine1" Header="Address" dxg:BandBase.GridRow="1" />
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="Picture">
+                    <dxg:GridColumn FieldName="ImageData" Header="Photo" AllowEditing="False" CellTemplate="{StaticResource ImageDataCellTemplate}" />
+                </dxg:GridControlBand>
+            </dxg:GridControl.Bands>
+            <dxg:GridControl.GroupSummary>
+                <dxg:GridSummaryItem FieldName="BirthDate" SummaryType="Min" />
+            </dxg:GridControl.GroupSummary>
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem SummaryType="Count" Alignment="Right" />
+            </dxg:GridControl.TotalSummary>
+            <dxg:GridControl.View>
+                <dxg:TreeListView KeyFieldName="Id" ShowFixedTotalSummary="True" ShowSearchPanelMode="Never" AutoExpandAllNodes="True" ParentFieldName="ParentId" AutoWidth="True" AllowPerPixelScrolling="True" NodeImageSelector="{StaticResource imageSelector}" ShowNodeImages="True" />
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </DataTemplate>
+</ResourceDictionary>

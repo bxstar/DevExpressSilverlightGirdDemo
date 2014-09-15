@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridDemo.Web", "..\GridDemo.Web\GridDemo.Web.csproj", "{B1F974E1-17EE-4099-B51A-D8FC750B35AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridDemo", "GridDemo.csproj", "{B1811121-9E3F-4DC3-94F0-6F2C52B473F1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B1F974E1-17EE-4099-B51A-D8FC750B35AD} = {B1F974E1-17EE-4099-B51A-D8FC750B35AD}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		DemoDebug|Any CPU = DemoDebug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1F974E1-17EE-4099-B51A-D8FC750B35AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1F974E1-17EE-4099-B51A-D8FC750B35AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F974E1-17EE-4099-B51A-D8FC750B35AD}.DemoDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1F974E1-17EE-4099-B51A-D8FC750B35AD}.DemoDebug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F974E1-17EE-4099-B51A-D8FC750B35AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1F974E1-17EE-4099-B51A-D8FC750B35AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1811121-9E3F-4DC3-94F0-6F2C52B473F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1811121-9E3F-4DC3-94F0-6F2C52B473F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1811121-9E3F-4DC3-94F0-6F2C52B473F1}.DemoDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1811121-9E3F-4DC3-94F0-6F2C52B473F1}.DemoDebug|Any CPU.Build.0 = Debug|Any CPU
+		{B1811121-9E3F-4DC3-94F0-6F2C52B473F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1811121-9E3F-4DC3-94F0-6F2C52B473F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

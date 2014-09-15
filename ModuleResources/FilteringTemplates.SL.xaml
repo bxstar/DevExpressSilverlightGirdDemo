@@ -1,0 +1,11 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:local="clr-namespace:GridDemo">
+
+    <local:DoubleToCriteriaOperatorConverter x:Key="DoubleToCriteriaOperatorConverter" />
+    <dx:DefaultBooleanToNullableBooleanConverter x:Key="DefaultBooleanToNullableBooleanConverter" />
+
+    <DataTemplate x:Key="quantityColumnFilterPopupTemplate">
+        <dx:BackgroundPanel>
+            <dxdb:SliderControl EditValue="{Binding Path=CustomColumnFilter, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource DoubleToCriteriaOperatorConverter}, Mode=TwoWay}" Margin="11" Header="Minimum Quantity" Minimum="0" Maximum="100" Width="200" SmallStep="1" ValueMinWidth="17" />
+        </dx:BackgroundPanel>
+    </DataTemplate>
+</ResourceDictionary>

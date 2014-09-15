@@ -1,0 +1,66 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxgh="clr-namespace:DevExpress.Xpf.Grid.Hierarchy;assembly=DevExpress.Xpf.Grid.v14.1.Core" xmlns:local="clr-namespace:GridDemo">
+
+
+    <Storyboard x:Key="collapseStoryborad">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="AnimationProgress">
+            <DiscreteDoubleKeyFrame Value="0" KeyTime="0" />
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+    <ControlTemplate x:Key="blindsTemplate" TargetType="ContentControl">
+        <local:DXExpanderDecorator IsItemVisible="{Binding Path=(dxgh:HierarchyPanel.IsItemVisible)}" Content="{TemplateBinding Content}">
+            <local:DXExpanderDecorator.Template>
+                <ControlTemplate TargetType="ContentControl">
+                    <ContentPresenter Name="contentPresenter" dx:DXExpander.TracksRevealing="True">
+                        <ContentPresenter.RenderTransform>
+                            <ScaleTransform />
+                        </ContentPresenter.RenderTransform>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="IsRevealedState">
+                                <VisualState x:Name="VisibleInGroup">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(ScaleTransform.ScaleY)" BeginTime="0:0:0" From="0" To="1" Duration="0:0:.2">
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="HiddenInGroup">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(ScaleTransform.ScaleY)">
+                                            <DiscreteDoubleKeyFrame Value="0" KeyTime="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </ContentPresenter>
+                </ControlTemplate>
+            </local:DXExpanderDecorator.Template>
+        </local:DXExpanderDecorator>
+    </ControlTemplate>
+    <ControlTemplate x:Key="fadeInTemplate" TargetType="ContentControl">
+        <local:DXExpanderDecorator IsItemVisible="{Binding Path=(dxgh:HierarchyPanel.IsItemVisible)}" Content="{TemplateBinding Content}">
+            <local:DXExpanderDecorator.Template>
+                <ControlTemplate TargetType="ContentControl">
+                    <ContentPresenter Name="contentPresenter">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="IsRevealedState">
+                                <VisualState x:Name="VisibleInGroup">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0" From="0" To="1" Duration="0:0:1.5">
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="HiddenInGroup">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="Opacity">
+                                            <DiscreteDoubleKeyFrame Value="0" KeyTime="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </ContentPresenter>
+                </ControlTemplate>
+            </local:DXExpanderDecorator.Template>
+        </local:DXExpanderDecorator>
+    </ControlTemplate>
+</ResourceDictionary>

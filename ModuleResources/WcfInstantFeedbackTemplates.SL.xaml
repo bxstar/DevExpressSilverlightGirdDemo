@@ -1,0 +1,18 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:local="clr-namespace:GridDemo">
+
+    <local:IssueStatusImageConverter x:Key="IssueStatusImageConverter" />
+    <local:BooleanToDefaultBooleanConverter x:Key="BooleanToDefaultBooleanConverter" />
+    <local:IdToUriConverter x:Key="IdToUriConverter" />
+    <dx:DurationToDoubleConverter x:Key="DurationToDoubleConverter" />
+    <dx:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    <DataTemplate x:Key="idTemplate">
+
+         <HyperlinkButton HorizontalAlignment="Center" NavigateUri="{Binding Path=Value, Converter={StaticResource IdToUriConverter}}" Content="{Binding Path=Value}" />
+    </DataTemplate>
+    <DataTemplate x:Key="statusTemplate">
+        <Image Height="16" Width="16" HorizontalAlignment="Center" ToolTipService.ToolTip="{Binding Path=Value}" Source="{Binding Path=Value, Converter={StaticResource IssueStatusImageConverter}}">
+
+        </Image>
+    </DataTemplate>
+</ResourceDictionary>

@@ -1,0 +1,75 @@
+<local:GridDemoModule x:Class="GridDemo.DragDrop" mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+    <local:GridDemoModule.Resources>
+        <ResourceDictionary>
+            <local:DragDropViewModel x:Key="viewModel" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GridDemo;component/Themes/generic.SL.xaml" />
+                <ResourceDictionary Source="/GridDemo;component/ModuleResources/DragDropTemplates.SL.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </local:GridDemoModule.Resources>
+    <dxdb:DemoModuleControl SupressGroupFramePaddingInOptions="False">
+        <dxdb:DemoModuleControl.OptionsTopText>
+            Drag the selected row(s) and drop it to the grid or Recycle Bin displayed within the Options panel.
+        </dxdb:DemoModuleControl.OptionsTopText>
+        <dxdb:DemoModuleControl.OptionsContent>
+            <dx:DXDockPanel>
+                <dxe:CheckEdit dx:DXDockPanel.Dock="Top" Name="multiselectionCheckEdit" Margin="0,0,0,4" IsChecked="{Binding SelectionMode, ElementName=grid, Converter={StaticResource multiSelectConverter}, Mode=TwoWay}">
+                    Allow selecting multiple rows
+                </dxe:CheckEdit>
+                <dxe:CheckEdit dx:DXDockPanel.Dock="Top" x:Name="allowScrollingCheckEdit" IsChecked="{Binding ElementName=gridDragDropManager, Path=AllowScrolling, Mode=TwoWay}">
+                    Allow scrolling on drag-n-drop
+                </dxe:CheckEdit>
+                <dx:GroupFrame Header="Recycle Bin" Margin="0,12,0,0" DataContext="{StaticResource viewModel}" MaxWidth="230">
+                    <dx:DXDockPanel>
+                        <Button Name="emptyRecycleBinButton" dx:DXDockPanel.Dock="Bottom" Command="{Binding ClearRecycleBin}" Margin="0,8,0,0" IsEnabled="{Binding RecycleBinSource.Count, Converter={StaticResource countToEnabledConverter}}">
+                            Empty Recycle Bin
+                        </Button>
+
+                            <dxe:ListBoxEdit x:Name="recycleBinList" Background="{x:Null}" MinHeight="300" ItemsSource="{Binding RecycleBinSource}" ScrollViewer.HorizontalScrollBarVisibility="Visible" SelectionMode="Multiple" ItemTemplate="{StaticResource recycleBinItemTemplate}">
+                                <i:Interaction.Behaviors>
+                                    <dxg:ListBoxDragDropManager>
+                                        <dxg:ListBoxDragDropManager.TemplatesContainer>
+                                            <dxg:DragDropTemplatesContainer />
+                                        </dxg:ListBoxDragDropManager.TemplatesContainer>
+                                    </dxg:ListBoxDragDropManager>
+                                </i:Interaction.Behaviors>
+                            </dxe:ListBoxEdit>
+
+                    </dx:DXDockPanel>
+                </dx:GroupFrame>
+            </dx:DXDockPanel>
+        </dxdb:DemoModuleControl.OptionsContent>
+        <Grid>
+            <dxg:GridControl x:Name="grid" DataContext="{StaticResource viewModel}" AllowLiveDataShaping="True" ItemsSource="{Binding DataSource}" SelectionMode="Row">
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn FieldName="OID" Header="Id" MinWidth="50" Width="50" ReadOnly="true" />
+                    <dxg:GridColumn FieldName="From" MinWidth="100" Width="100" />
+                    <dxg:GridColumn FieldName="Subject" MinWidth="100" Width="200" />
+                    <dxg:GridColumn FieldName="Sent" MinWidth="100" Width="100" GroupInterval="DateRange" AutoFilterCondition="Equals">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:DateEditSettings DisplayFormat="d" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn FieldName="HoursActive" MinWidth="100" Width="100" AutoFilterCondition="Like" />
+                </dxg:GridControl.Columns>
+                <dxg:GridControl.TotalSummary>
+                    <dxg:GridSummaryItem FieldName="HoursActive" SummaryType="Count" Alignment="Right" />
+                </dxg:GridControl.TotalSummary>
+                <dxg:GridControl.GroupSummary>
+                    <dxg:GridSummaryItem FieldName="HoursActive" SummaryType="Count" />
+                </dxg:GridControl.GroupSummary>
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="view" ShowFixedTotalSummary="True" IsTotalSummaryMenuEnabled="False" ShowGroupedColumns="True" EditorShowMode="MouseUpFocused" AutoWidth="True" />
+                </dxg:GridControl.View>
+                <i:Interaction.Behaviors>
+                    <dxg:GridDragDropManager x:Name="gridDragDropManager">
+                        <dxg:GridDragDropManager.TemplatesContainer>
+                            <dxg:DragDropTemplatesContainer />
+                        </dxg:GridDragDropManager.TemplatesContainer>
+                    </dxg:GridDragDropManager>
+                </i:Interaction.Behaviors>
+            </dxg:GridControl>
+        </Grid>
+    </dxdb:DemoModuleControl>
+</local:GridDemoModule>

@@ -1,0 +1,23 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:local="clr-namespace:GridDemo" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="local:NameTextControl">
+        <Setter Property="IsHitTestVisible" Value="false" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:NameTextControl">
+                    <Grid Margin="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="3" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Foreground="#FF949494" Text="{TemplateBinding NameValue}" />
+
+                        <TextBlock Foreground="Black" Grid.Column="2" Text="{TemplateBinding TextValue}">
+
+                        </TextBlock>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

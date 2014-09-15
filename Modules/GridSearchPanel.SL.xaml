@@ -1,0 +1,113 @@
+<local:GridDemoModule x:Class="GridDemo.GridSearchPanel" mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300" x:Name="root" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm">
+
+    <local:GridDemoModule.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GridDemo;component/Themes/generic.SL.xaml" />
+                <ResourceDictionary Source="/GridDemo;component/ModuleResources/SearchPanelTemplates.SL.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <dxdb:NWindDataLoader x:Key="NWindDataLoader" />
+            <local:DemoDataProvider x:Key="DemoDataProvider" />
+            <local:DemoValuesProvider x:Key="DemoValuesProvider" />
+            <local:GridSearchPanelViewModel x:Key="viewModel">
+                <local:GridSearchPanelViewModel.View>
+                    <dxg:TableView x:Name="View" AutoWidth="True" ShowTotalSummary="True" ShowFixedTotalSummary="True" SearchString="Brazil France -Reims" ShowSearchPanelFindButton="True" SearchPanelClearOnClose="False" />
+                </local:GridSearchPanelViewModel.View>
+            </local:GridSearchPanelViewModel>
+        </ResourceDictionary>
+    </local:GridDemoModule.Resources>
+    <dxdb:DemoModuleControl SupressGroupFramePaddingInOptions="False" DataContext="{StaticResource viewModel}">
+        <dxdb:DemoModuleControl.OptionsContent>
+            <StackPanel Orientation="Vertical" MaxWidth="240">
+                <dxe:CheckEdit x:Name="cbShowSearchPanel" Content="Show Search Panel" IsChecked="{Binding View.ActualShowSearchPanel, Mode=OneWay, ElementName=grid}" Command="{Binding DataContext.ChangeSearchPanelVisibilityCommand}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" Margin="0,0,0,4" />
+                <dxe:CheckEdit Content="Highlight Search Results" IsChecked="{Binding View.SearchPanelHighlightResults, Mode=TwoWay, ElementName=grid}" Margin="0,0,0,4" />
+                <dxe:CheckEdit Content="Clear Search Results on Panel Close" IsChecked="{Binding View.SearchPanelClearOnClose, Mode=TwoWay, ElementName=grid}" Margin="0,0,0,12" />
+
+                <dx:GroupFrame Header="Search Panel Show Mode" Margin="0,0,0,12">
+                    <dxe:ListBoxEdit x:Name="lbShowMode" Background="{x:Null}" Margin="0,0,30,0" ShowBorder="False" SelectedItem="{Binding Path=View.ShowSearchPanelMode, Mode=TwoWay, Converter={StaticResource SearchPanelModeConverter}}">
+                        <dxe:ListBoxEdit.StyleSettings>
+                            <dxe:RadioListBoxEditStyleSettings />
+                        </dxe:ListBoxEdit.StyleSettings>
+                        <dxe:ListBoxEditItem ContentTemplate="{StaticResource showSearchPanelContentTemplate}" ToolTipService.ToolTip="End-users can control the search panel visibility by pressing CTRL+F and using the panel's close button, if enabled">
+                            <dxg:ShowSearchPanelMode>Default</dxg:ShowSearchPanelMode>
+                        </dxe:ListBoxEditItem>
+                        <dxe:ListBoxEditItem ContentTemplate="{StaticResource showSearchPanelContentTemplate}" ToolTipService.ToolTip="Search panel is always displayed">
+                            <dxg:ShowSearchPanelMode>Always</dxg:ShowSearchPanelMode>
+                        </dxe:ListBoxEditItem>
+                        <dxe:ListBoxEditItem ContentTemplate="{StaticResource showSearchPanelContentTemplate}" ToolTipService.ToolTip="Search panel is always hidden">
+                            <dxg:ShowSearchPanelMode>Never</dxg:ShowSearchPanelMode>
+                        </dxe:ListBoxEditItem>
+                    </dxe:ListBoxEdit>
+                </dx:GroupFrame>
+
+                <dx:GroupFrame Header="Search Mode" Margin="0,0,0,12">
+                    <dxe:ListBoxEdit x:Name="lbSearchMode" Background="{x:Null}" Margin="0,0,30,0" ShowBorder="False" SelectedItem="{Binding Path=View.SearchPanelFindMode, Mode=TwoWay, Converter={StaticResource SearchPanelModeConverter}}">
+                        <dxe:ListBoxEdit.StyleSettings>
+                            <dxe:RadioListBoxEditStyleSettings />
+                        </dxe:ListBoxEdit.StyleSettings>
+                        <dxe:ListBoxEditItem ToolTipService.ToolTip="Search starts automatically" ContentTemplate="{StaticResource findModeTemplate}">
+                            <dxe:FindMode>Always</dxe:FindMode>
+                        </dxe:ListBoxEditItem>
+                        <dxe:ListBoxEditItem ToolTipService.ToolTip="Search starts when an end-user clicks Find or presses ENTER" ContentTemplate="{StaticResource findModeTemplate}">
+                            <dxe:FindMode>FindClick</dxe:FindMode>
+                        </dxe:ListBoxEditItem>
+                    </dxe:ListBoxEdit>
+                </dx:GroupFrame>
+
+                <dx:GroupFrame Header="Search Panel Buttons" Margin="0,0,0,12">
+                    <StackPanel Orientation="Vertical">
+                        <dxe:CheckEdit Content="Show MRU Button" Margin="0,0,0,4" IsChecked="{Binding View.ShowSearchPanelMRUButton, Mode=TwoWay, ElementName=grid}" ToolTipService.ToolTip="Enables the dropdown button that provides access to the Most Recently Used strings" />
+                        <Grid ToolTipService.ToolTip="Enables the Find button used to initiate search in 'Find on click' mode">
+                            <dxe:CheckEdit x:Name="cbShowFindButton" Margin="0,0,0,4" Content="Show Find Button" IsChecked="{Binding View.ShowSearchPanelFindButton, Mode=TwoWay, ElementName=grid}" IsEnabled="{Binding Path=SelectedIndex, ElementName=lbSearchMode, Converter={StaticResource IntToBooleanConverter}}" />
+                        </Grid>
+                        <Grid ToolTipService.ToolTip="Enables the search panel's close button used in 'Default' display mode">
+                            <dxe:CheckEdit x:Name="cbShowCloseButton" Content="Show Close Button" IsChecked="{Binding View.ShowSearchPanelCloseButton, Mode=TwoWay, ElementName=grid}" IsEnabled="{Binding Path=SelectedIndex, ElementName=lbShowMode, Converter={StaticResource IntToBooleanConverterInvert}}" />
+                        </Grid>
+                    </StackPanel>
+                </dx:GroupFrame>
+
+                <dx:GroupFrame x:Name="groupFrameColumns" Header="Search Columns" Margin="0,0,0,12">
+                    <dxe:ComboBoxEdit x:Name="columnsList" ItemsSource="{Binding DataContext.Columns}" IsTextEditable="False" DisplayMember="HeaderCaption">
+                        <dxe:ComboBoxEdit.StyleSettings>
+                            <dxe:CheckedComboBoxStyleSettings />
+                        </dxe:ComboBoxEdit.StyleSettings>
+                        <dxmvvm:Interaction.Triggers>
+                            <dxmvvm:EventToCommand EventName="EditValueChanged" Command="{Binding DataContext.ChangeAllowSearchPanelCommand}" CommandParameter="{Binding SelectedItems, ElementName=columnsList}" />
+                        </dxmvvm:Interaction.Triggers>
+                    </dxe:ComboBoxEdit>
+                </dx:GroupFrame>
+            </StackPanel>
+        </dxdb:DemoModuleControl.OptionsContent>
+        <dxg:GridControl Grid.Row="1" Name="grid" DataContext="{StaticResource viewModel}" Grid.Column="0" View="{Binding View}" ItemsSource="{Binding Path=Invoices, Source={StaticResource NWindDataLoader}}">
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="Country" />
+                <dxg:GridColumn FieldName="City" />
+                <dxg:GridColumn FieldName="Quantity" />
+                <dxg:GridColumn FieldName="UnitPrice">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="$0.00" MaskType="Numeric" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="Discount">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="0%" MaskType="Numeric" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="Total" UnboundType="Decimal" UnboundExpression="([UnitPrice] * [Quantity]) * (1 - [Discount])">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings DisplayFormat="$0.00" MaskType="Numeric" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem FieldName="UnitPrice" DisplayFormat="Avg=$0.00" SummaryType="Average" />
+                <dxg:GridSummaryItem FieldName="Discount" SummaryType="Max" />
+                <dxg:GridSummaryItem SummaryType="Count" Alignment="Right" />
+            </dxg:GridControl.TotalSummary>
+            <dxmvvm:Interaction.Triggers>
+                <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding PopulateColumnsCommand}" CommandParameter="{Binding Columns, ElementName=grid}" ProcessEventsFromDisabledEventOwner="True" />
+                <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding SelectAllItemsCommand, ElementName=columnsList}" CommandParameter="{Binding SelectAllAction}" ProcessEventsFromDisabledEventOwner="True" />
+            </dxmvvm:Interaction.Triggers>
+        </dxg:GridControl>
+    </dxdb:DemoModuleControl>
+</local:GridDemoModule>

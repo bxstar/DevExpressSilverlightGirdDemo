@@ -1,0 +1,93 @@
+<local:GridDemoModule x:Class="GridDemo.BindingToDynamicObject" mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+    <local:GridDemoModule.Resources>
+        <local:StringStateToBoolConverter x:Key="StringStateToBoolConverter" />
+    </local:GridDemoModule.Resources>
+    <dxdb:DemoModuleControl SupressGroupFramePaddingInOptions="False">
+        <dxdb:DemoModuleControl.OptionsContent>
+            <Grid>
+                <StackPanel MinWidth="180" MaxWidth="230" x:Name="optionsPanel">
+                    <TextBlock Margin="0,0,0,3" Text="New column field name:" />
+
+                    <dxe:TextEdit x:Name="FieldNameBox" ValidateOnTextInput="True" MaskType="RegEx" Mask="[a-zA-Z_]\w*" Margin="0,0,0,5" NullText="Enter new column name here..." NullValue="New Column" Text="{Binding ColumnName, Mode=TwoWay}" Validate="FieldNameBox_Validate" />
+
+                    <TextBlock Margin="0,0,0,3" Text="New column type:" />
+                    <dxe:ComboBoxEdit x:Name="TypeBox" Margin="0,0,0,12" SelectedIndex="{Binding TypeIndex, Mode=TwoWay}" Foreground="Black" IsTextEditable="False">
+                        <dxe:ComboBoxEdit.Items>
+                            <dxe:ComboBoxEditItem Content="Integer" />
+                            <dxe:ComboBoxEditItem Content="String" />
+                            <dxe:ComboBoxEditItem Content="DateTime" />
+                            <dxe:ComboBoxEditItem Content="Boolean" />
+                        </dxe:ComboBoxEdit.Items>
+                    </dxe:ComboBoxEdit>
+                    <TextBlock Margin="0,0,0,3" Text="New column default value:" />
+                    <dxe:SpinEdit x:Name="DefaultValueBoxSpin" Margin="0,0,0,12" Value="0" IsFloatValue="False">
+                        <dxe:SpinEdit.Visibility>
+                            <Binding Path="TypeIndex">
+                                <Binding.Converter>
+                                    <dx:EnumToObjectConverter DefaultValue="Collapsed">
+                                        <dx:EnumToObjectConverter.Values>
+                                            <dx:EnumObjectProvider x:Key="0" Value="Visible" />
+                                        </dx:EnumToObjectConverter.Values>
+                                    </dx:EnumToObjectConverter>
+                                </Binding.Converter>
+                            </Binding>
+                        </dxe:SpinEdit.Visibility>
+                    </dxe:SpinEdit>
+                    <dxe:TextEdit x:Name="DefaultValueBoxText" Margin="0,0,0,12" NullText="Enter new column value here...">
+                        <dxe:TextEdit.Visibility>
+                            <Binding Path="TypeIndex">
+                                <Binding.Converter>
+                                    <dx:EnumToObjectConverter DefaultValue="Collapsed">
+                                        <dx:EnumToObjectConverter.Values>
+                                            <dx:EnumObjectProvider x:Key="1" Value="Visible" />
+                                        </dx:EnumToObjectConverter.Values>
+                                    </dx:EnumToObjectConverter>
+                                </Binding.Converter>
+                            </Binding>
+                        </dxe:TextEdit.Visibility>
+                    </dxe:TextEdit>
+                    <dxe:DateEdit x:Name="DefaultValueBoxDate" Margin="0,0,0,12" Foreground="Black">
+                        <dxe:DateEdit.Visibility>
+                            <Binding Path="TypeIndex">
+                                <Binding.Converter>
+                                    <dx:EnumToObjectConverter DefaultValue="Collapsed">
+                                        <dx:EnumToObjectConverter.Values>
+                                            <dx:EnumObjectProvider x:Key="2" Value="Visible" />
+                                        </dx:EnumToObjectConverter.Values>
+                                    </dx:EnumToObjectConverter>
+                                </Binding.Converter>
+                            </Binding>
+                        </dxe:DateEdit.Visibility>
+                    </dxe:DateEdit>
+                    <dxe:CheckEdit x:Name="DefaultValueBoxCheck" Margin="0,0,0,12" IsChecked="True" HorizontalAlignment="Center">
+                        <dxe:CheckEdit.Visibility>
+                            <Binding Path="TypeIndex">
+                                <Binding.Converter>
+                                    <dx:EnumToObjectConverter DefaultValue="Collapsed">
+                                        <dx:EnumToObjectConverter.Values>
+                                            <dx:EnumObjectProvider x:Key="3" Value="Visible" />
+                                        </dx:EnumToObjectConverter.Values>
+                                    </dx:EnumToObjectConverter>
+                                </Binding.Converter>
+                            </Binding>
+                        </dxe:CheckEdit.Visibility>
+                    </dxe:CheckEdit>
+                    <Button x:Name="CreateNewColBtn" Margin="0,0,0,12" Content="Create new column" Click="CreateNewColBtn_Click" IsEnabled="{Binding Path=ColumnName, Converter={StaticResource StringStateToBoolConverter}}" />
+                </StackPanel>
+            </Grid>
+        </dxdb:DemoModuleControl.OptionsContent>
+        <dxg:GridControl x:Name="grid">
+            <dxg:GridControl.Columns>
+
+
+                <dxg:GridColumn FieldName="Id" Header="Id" UnboundType="Integer" />
+                <dxg:GridColumn FieldName="FirstName" Header="First Name" UnboundType="String" />
+                <dxg:GridColumn FieldName="LastName" Header="Last Name" UnboundType="String" />
+
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.View>
+                <dxg:TableView Name="View" ShowAutoFilterRow="True" NewItemRowPosition="Top" AllowPerPixelScrolling="True" />
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </dxdb:DemoModuleControl>
+</local:GridDemoModule>

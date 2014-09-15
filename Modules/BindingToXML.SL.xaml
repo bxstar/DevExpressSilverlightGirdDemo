@@ -1,0 +1,46 @@
+<local:GridDemoModule x:Class="GridDemo.BindingToXML" mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+    <local:GridDemoModule.Resources>
+        <local:XmlDateTimeConverter x:Key="XmlDateTimeConverter" />
+        <local:XmlIntegerConverter x:Key="XmlIntegerConverter" />
+    </local:GridDemoModule.Resources>
+    <dxdb:DemoModuleControl>
+        <Grid>
+            <dxg:GridControl x:Name="grid">
+                <dxg:GridControl.Columns>
+
+                    <dxg:GridColumn Header="Id" Width="50" Binding="{Binding Path=RowData.Row[Id].Value, RelativeSource={RelativeSource Self}, Mode=TwoWay, Converter={StaticResource XmlIntegerConverter}}">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:SpinEditSettings IsFloatValue="False" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn Header="First Name" Binding="{Binding Path=RowData.Row[FirstName].Value, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings NullValue="" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn Header="Last Name" Binding="{Binding Path=RowData.Row[LastName].Value, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings NullValue="" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn Header="Job" Binding="{Binding Path=RowData.Row[JobTitle].Value, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings NullValue="" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn Header="Email Address" Width="200" Binding="{Binding Path=RowData.Row[EmailAddress].Value, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextEditSettings NullValue="" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn Header="BirthDate" Width="100" Binding="{Binding Path=RowData.Row[BirthDate].Value, RelativeSource={RelativeSource Self}, Mode=TwoWay, Converter={StaticResource XmlDateTimeConverter}}">
+
+                    </dxg:GridColumn>
+                </dxg:GridControl.Columns>
+                <dxg:GridControl.View>
+                    <dxg:TableView AutoWidth="True" ShowAutoFilterRow="True" AllowPerPixelScrolling="True" />
+                </dxg:GridControl.View>
+            </dxg:GridControl>
+        </Grid>
+    </dxdb:DemoModuleControl>
+</local:GridDemoModule>

@@ -1,0 +1,81 @@
+<local:GridDemoModule x:Class="GridDemo.TableView" mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800" UseGridControlWrapperAsDataContext="True" xmlns:local="clr-namespace:GridDemo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase" xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+    <local:GridDemoModule.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GridDemo;component/Themes/generic.SL.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <local:DemoValuesProvider x:Key="DemoValuesProvider" />
+            <local:ScrollingAnimationDurationToBooleanConverter x:Key="ScrollingAnimationDurationToBooleanConverter" />
+            <dx:DefaultBooleanToNullableBooleanConverter x:Key="DefaultBooleanToNullableBooleanConverter" />
+            <dxdb:NWindDataLoader x:Key="NWindDataLoader" />
+        </ResourceDictionary>
+    </local:GridDemoModule.Resources>
+    <dxdb:DemoModuleControl>
+        <dxdb:DemoModuleControl.OptionsContent>
+            <StackPanel>
+                <dx:GroupFrame Header="Scrolling Options" Margin="0,0,0,12">
+                    <StackPanel>
+                        <dxe:CheckEdit x:Name="allowFixedGroupsCheckEdit" FontWeight="Bold" Margin="0,0,0,4" IsChecked="{Binding Path=GridControl.View.AllowFixedGroups, Mode=TwoWay, Converter={StaticResource DefaultBooleanToNullableBooleanConverter}}" Content="Allow Fixed Groups" ToolTipService.ToolTip="Specifies whether the top visible group row is always displayed when scrolling through grouped data." />
+                        <dxe:CheckEdit x:Name="allowCascadeUpdateCheckEdit" Margin="0,0,0,4" IsChecked="{Binding Path=GridControl.View.AllowCascadeUpdate, Mode=TwoWay}" Content="Allow Cascade Update" ToolTipService.ToolTip="Makes vertical scrolling perfectly fast and smooth." />
+                        <dxe:CheckEdit x:Name="allowPerPixelScrollingCheckEdit" Margin="0,0,0,4" IsChecked="{Binding Path=GridControl.View.AllowPerPixelScrolling, Mode=TwoWay}" Content="Allow Per Pixel Scrolling" ToolTipService.ToolTip="Specifies whether per-pixel scrolling is enabled." />
+                        <dxe:CheckEdit x:Name="allowScrollingAnimation" IsEnabled="{Binding GridControl.View.AllowPerPixelScrolling}" Margin="0,0,0,0" IsChecked="{Binding Path=GridControl.View.ScrollAnimationDuration, Mode=TwoWay, Converter={StaticResource ScrollingAnimationDurationToBooleanConverter}}" Content="Allow Scrolling Animation" ToolTipService.ToolTip="Turn on this option to provide visual feedback and enhance interactivity when scrolling rows." />
+                    </StackPanel>
+                </dx:GroupFrame>
+                <dx:GroupFrame Header="Customization Options" Margin="0,0,0,12">
+                    <StackPanel>
+                        <dxe:CheckEdit x:Name="autoWidthCheckEdit" Margin="0,0,0,4" IsChecked="{Binding Path=GridControl.View.AutoWidth, Mode=TwoWay}" Content="Column Auto Width" ToolTipService.ToolTip="Specifies whether column widths are automatically changed to match the grid's width." />
+                        <dxe:CheckEdit x:Name="allowSortingCheckEdit" Margin="0,0,0,4" IsChecked="{Binding Path=GridControl.View.AllowSorting, Mode=TwoWay}" Content="Allow Sorting" ToolTipService.ToolTip="Specifies whether you can sort data." />
+                        <dxe:CheckEdit x:Name="allowGroupingCheckEdit" Margin="0,0,0,4" IsChecked="{Binding Path=GridControl.View.AllowGrouping, Mode=TwoWay}" Content="Allow Grouping" ToolTipService.ToolTip="Specifies whether you can group data." />
+                        <dxe:CheckEdit x:Name="allowMovingCheckEdit" Margin="0,0,0,4" IsChecked="{Binding Path=GridControl.View.AllowColumnMoving, Mode=TwoWay}" Content="Allow Moving" ToolTipService.ToolTip="Specifies whether you are allowed to move columns via drag and drop." />
+                        <dxe:CheckEdit x:Name="allowResizingCheckEdit" Margin="0,0,0,4" IsChecked="{Binding Path=GridControl.View.AllowResizing, Mode=TwoWay}" Content="Allow Resizing" ToolTipService.ToolTip="Specifies whether you can change column widths by dragging the edges of their headers." />
+                        <dxe:CheckEdit x:Name="allowBestFitCheckEdit" Margin="0,0,0,4" IsChecked="{Binding Path=GridControl.View.AllowBestFit, Mode=TwoWay}" Content="Allow Best Fit" ToolTipService.ToolTip="Specifies whether it's allowed to calculate and aply optimal widths to all columns." />
+                        <dxe:CheckEdit x:Name="showIndicatorCheckEdit" Margin="0,0,0,0" IsChecked="{Binding Path=GridControl.View.ShowIndicator, Mode=TwoWay}" Content="Show Indicator" ToolTipService.ToolTip="Specifies whether the Row Indicator panel is displayed." />
+                    </StackPanel>
+                </dx:GroupFrame>
+                <dx:GroupFrame Header="Appearance Options" Margin="0,0,0,12">
+                    <StackPanel>
+                        <dxe:CheckEdit Name="showVerticalLinesCheckEdit" Margin="0,0,0,4" IsChecked="{Binding Path=GridControl.View.ShowVerticalLines, Mode=TwoWay}" Content="Show Vertical Lines" ToolTipService.ToolTip="Specifies whether to display vertical grid lines." />
+                        <dxe:CheckEdit Name="showHorizontalLinesCheckEdit" Margin="0,0,0,0" IsChecked="{Binding Path=GridControl.View.ShowHorizontalLines, Mode=TwoWay}" Content="Show Horizontal Lines" ToolTipService.ToolTip="Specifies whether to display horizontal grid lines." />
+                    </StackPanel>
+                </dx:GroupFrame>
+                <dx:GroupFrame Header="Navigation Style" Margin="0,0,0,12">
+                    <dxe:ComboBoxEdit Margin="0,0,0,0" IsTextEditable="False" x:Name="NavigationStyleComboBox" ItemsSource="{Binding NavigationStyles, Source={StaticResource DemoValuesProvider}}" SelectedIndex="0" SelectedItem="{Binding Path=GridControl.View.NavigationStyle, Mode=TwoWay}" ToolTipService.ToolTip="Specifies whether row and/or cell focusing is allowed." />
+                </dx:GroupFrame>
+                <dx:GroupFrame Header="Summary Options" Margin="0,0,0,12">
+                    <dxe:ListBoxEdit x:Name="lbSummary" Background="{x:Null}" Margin="0,0,30,0" ShowBorder="False" SelectedIndex="0" SelectedIndexChanged="lbSummary_SelectedIndexChanged">
+                        <dxe:ListBoxEdit.StyleSettings>
+                            <dxe:RadioListBoxEditStyleSettings />
+                        </dxe:ListBoxEdit.StyleSettings>
+                        <sys:String>Show Fixed Summary Panel</sys:String>
+                        <sys:String>Show Summary Panel</sys:String>
+                    </dxe:ListBoxEdit>
+                </dx:GroupFrame>
+            </StackPanel>
+        </dxdb:DemoModuleControl.OptionsContent>
+        <dxg:GridControl x:Name="grid" ItemsSource="{Binding Path=Invoices, Source={StaticResource NWindDataLoader}}">
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn x:Name="colID" FieldName="OrderID" MinWidth="60" Width="60" AllowResizing="False" FixedWidth="true" Header="ID" />
+                <dxg:GridColumn x:Name="colCountry" FieldName="Country" MinWidth="50" Width="50" SortIndex="0" />
+                <dxg:GridColumn x:Name="colCity" FieldName="City" MinWidth="50" Width="50" />
+                <dxg:GridColumn x:Name="colUnitPrice" FieldName="UnitPrice" MinWidth="50" Width="50">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:SpinEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="c" MaskCulture="en-US" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn x:Name="colQuantity" FieldName="Quantity" MinWidth="50" Width="50" />
+                <dxg:GridColumn x:Name="colTotal" FieldName="Total" MinWidth="50" Width="50" UnboundType="Decimal" ReadOnly="True" UnboundExpression="([UnitPrice] * [Quantity]) * (1 - [Discount])">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="c" MaskCulture="en-US" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem FieldName="Country" SummaryType="Count" />
+                <dxg:GridSummaryItem SummaryType="Count" Alignment="Right" />
+            </dxg:GridControl.TotalSummary>
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="view" AllowFixedGroups="True" ShowGroupedColumns="True" AllowCascadeUpdate="True" AllowPerPixelScrolling="True" NavigationStyle="Row" AutoWidth="True" ShowFixedTotalSummary="True" />
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </dxdb:DemoModuleControl>
+</local:GridDemoModule>
